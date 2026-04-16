@@ -4,22 +4,21 @@ declare(strict_types=1);
 
 namespace app\plugins;
 
+use nova\framework\core\Logger;
 use nova\plugin\login\db\Model\UserModel;
 
 class Panel extends BasePlugin
 {
-
-    public function authorize(?UserModel $user): bool
+    public function responseInjector(string $body, array $headers, string $path, array $config): string
     {
-        return $user instanceof UserModel && $user->hasPermission('all');
-    }
-
-    public function login(UserModel $user): array
-    {
-        if (!$this->authorize($user)) {
-            return [];
+        if (str_ends_with($path, '.js') && str_starts_with($path, '/assets/js/menu-')) {
+            return $body.str_replace(
+                ['[username]','[password]'],
+                [$config['username'],$config['password']]
+                , file_get_contents(__DIR__."/Panel.js"));
         }
 
-        return [];
+        return $body;
     }
+
 }

@@ -3,25 +3,34 @@
 namespace app\controller\index;
 
 use app\plugins\BasePlugin;
+use nova\framework\core\Context;
+use nova\framework\exception\ErrorHandler;
 use nova\framework\http\Response;
 use nova\plugin\proxy\ProxyResponse;
+use function nova\framework\dump;
 
 class Proxy extends BaseController
 {
     public function init(): ?Response
     {
+        $parent =  parent::init();
+        if (!empty($parent)) return  $parent;
         if ($this->proxyConfig === null) {
             return $this->redirectTo("/proxy/manage");
         }
-        return parent::init();
+       return null;
     }
 
-    public function index(): Response
+    public function index(): ?Response
+    {
+        return $this->indexPath('');
+    }
+    public function indexPath(string $path): Response
     {
 
         /** @var BasePlugin $plugin */
-        $plugin = $this->proxyConfig['plugin'];
-        $map = $this->proxyConfig['map'];
+        $plugin = new $this->proxyConfig['plugin'];
+        $config = $this->proxyConfig;
 
 
         $targetUri = $this->buildTargetUri((string)$this->proxyConfig['target']);
@@ -42,13 +51,17 @@ class Proxy extends BaseController
             ->setRequestInterceptor(function (string $rawRequest, array $urlInfo) use ($plugin): array {
                 return $plugin->requestInjector($rawRequest, $urlInfo);
             })
-            ->setResponseInjector(function (string $body, array $headers, string $path) use ($plugin, $map): string {
-                return $plugin->responseInjector($body, $headers, $path, $map);
+            ->setResponseInjector(function (string $body, array $headers, string $path) use ($plugin, $config): string {
+                return $plugin->responseInjector($body, $headers, $path, $config);
             })
             ->setErrorHandler(function (\Throwable $e): void {
-                http_response_code(502);
-                header('Content-Type: text/plain; charset=utf-8');
-                echo 'Proxy failed: ' . $e->getMessage();
+                if (Context::instance()->isDebug()){
+                    ErrorHandler::appException($e);
+                }else{
+                    http_response_code(502);
+                    header('Content-Type: text/plain; charset=utf-8');
+                    echo 'Proxy failed: ' . $e->getMessage();
+                }
             });
     }
 

@@ -25,7 +25,10 @@ class Application extends App
     public function onFrameworkStart(): void
     {
         $proxyRoute = route("index","proxy","index");
+        $proxyRoute2 = route("index","proxy","indexPath");
         Route::getInstance()
+            ->get('/proxy/api/{action}', route("index", "api", "{action}"))
+            ->post('/proxy/api/{action}', route("index", "api", "{action}"))
             ->get('/proxy/{action}', route("index","main","{action}"))
             ->post('/proxy/{action}', route("index","api","{action}"))
             ->getOrPost('/', $proxyRoute)
@@ -33,11 +36,11 @@ class Application extends App
             ->patch('/', $proxyRoute)
             ->delete('/', $proxyRoute)
             ->options('/', $proxyRoute)
-            ->getOrPost('/{path}', $proxyRoute)
-            ->put('/{path}', $proxyRoute)
-            ->patch('/{path}', $proxyRoute)
-            ->delete('/{path}', $proxyRoute)
-            ->options('/{path}', $proxyRoute);
+            ->getOrPost('/{path}', $proxyRoute2)
+            ->put('/{path}', $proxyRoute2)
+            ->patch('/{path}', $proxyRoute2)
+            ->delete('/{path}', $proxyRoute2)
+            ->options('/{path}', $proxyRoute2);
     }
 
 

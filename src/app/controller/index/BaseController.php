@@ -3,6 +3,7 @@
 namespace app\controller\index;
 
 use app\plugins\PluginRegistry;
+use app\service\ProxyConfigService;
 use nova\framework\http\Response;
 use nova\framework\route\Controller;
 use nova\plugin\login\db\Model\UserModel;
@@ -13,6 +14,7 @@ class BaseController extends Controller
     protected ?UserModel $currentUser = null;
 
     protected ?array $proxyConfig = null;
+    protected string $domain = "";
     public function init(): ?Response
     {
         $this->currentUser = LoginManager::getInstance()->checkLogin();
@@ -22,8 +24,9 @@ class BaseController extends Controller
             return Response::asText('403 Forbidden',[],403);
         }
 
-        $domain = $this->request->getDomainNoPort();
-        $this->proxyConfig = PluginRegistry::resolve($domain);
+        $this->domain = $this->request->getDomainNoPort();
+        $this->proxyConfig = ProxyConfigService::getInstance()->getByDomain($this->domain);
+
 
         return parent::init();
     }

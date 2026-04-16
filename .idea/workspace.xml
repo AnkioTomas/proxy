@@ -4,36 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef61214b-9224-460e-adc3-e65da86818f2" name="更改" comment=":recycle: (proxy): 重构代理模块，移除ProxyType类并引入新的代理配置管理方式&#10;&#10;重构了代理模块，删除了`ProxyType`类，将代理配置从`config.php`中移出到独立的`proxyConfig.php`文件中。新增了`AListProxy`类，并修改了`ClashProxy`和`ProxyAbstract`类，使其不再依赖`ProxyType`。同时，`Application`类现在从`proxyConfig.php`加载代理配置，并动态实例化代理类。这些改动提高了代码的可维护性和扩展性。">
-      <change afterPath="$PROJECT_DIR$/src/app/controller/index/Api.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/controller/index/BaseController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/controller/index/Main.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/controller/index/Proxy.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/plugins/BasePlugin.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/plugins/Panel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/static/components/captcha" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/static/components/dataTable" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/view/index/layout.tpl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/view/index/main/manage.tpl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/view/publicHeader.tpl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/view/publicScript.tpl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nova/plugin/avatar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nova/plugin/captcha" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nova/plugin/cookie" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nova/plugin/device" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nova/plugin/http" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nova/plugin/ip" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nova/plugin/login" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nova/plugin/orm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nova/plugin/proxy" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nova/plugin/tpl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/proxy.php" afterDir="false" />
+    <list default="true" id="ef61214b-9224-460e-adc3-e65da86818f2" name="更改" comment=":sparkles: feat(proxy): 添加内容重写和请求转发功能&#10;&#10;实现内容重写器和请求构建器，支持重写 HTML/CSS 中的外部链接，&#10;并通过代理转发 HTTP 请求和响应。包括 URL 重写、响应处理和&#10;流式传输功能，提升代理模块的灵活性和可扩展性。">
+      <change afterPath="$PROJECT_DIR$/src/app/plugins/Panel.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/service/ProxyConfigService.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/static/components/formDialog" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/static/js/manage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitmodules" beforeDir="false" afterPath="$PROJECT_DIR$/.gitmodules" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nova.phar" beforeDir="false" afterPath="$PROJECT_DIR$/nova.phar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/Application.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Application.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/controller/index/Api.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/controller/index/Api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/controller/index/BaseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/controller/index/BaseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/controller/index/Proxy.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/controller/index/Proxy.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/plugins/BasePlugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/plugins/BasePlugin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/plugins/Panel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/plugins/Panel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/index/main/manage.tpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/index/main/manage.tpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nova/framework" beforeDir="false" afterPath="$PROJECT_DIR$/src/nova/framework" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nova/plugin/proxy" beforeDir="false" afterPath="$PROJECT_DIR$/src/nova/plugin/proxy" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,8 +37,22 @@
       <entry key="_/Users/ankio/Documents/SourceCode/PHP/proxy" value="2zg7PHNnmBgCh3JWbBAeaHEzyBV" />
     </persistenceIdMap>
   </component>
+  <component name="CopilotUserSelectedModel">
+    <selectedModels>
+      <entry key="chat-panel" value="Claude Opus 4.6" />
+      <entry key="agent-panel" value="Claude Opus 4.6" />
+    </selectedModels>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="/usr/local/Cellar/php@8.3/8.3.25/bin/php" />
@@ -75,28 +77,22 @@
     "WebServerToolWindowPanel.toolwindow.show.size": "false",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/ankio/Documents/SourceCode/PHP/proxy",
+    "last_opened_file_path": "/Users/ankio/Documents/SourceCode/PHP/proxy/src/nova/plugin",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/nova/plugin" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/app/view" />
     </key>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-js-predefined-d6986cc7102b-3bd3a6803838-JavaScript-PS-261.22158.283" />
-        <option value="bundled-php-predefined-a98d8de5180a-a9a4ea3ee0f4-com.jetbrains.php.sharedIndexes-PS-261.22158.283" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
@@ -113,7 +109,12 @@
       <workItem from="1771250869824" duration="2888000" />
       <workItem from="1776150359947" duration="1169000" />
       <workItem from="1776178788146" duration="57000" />
-      <workItem from="1776219227243" duration="23040000" />
+      <workItem from="1776219227243" duration="25016000" />
+      <workItem from="1776318675420" duration="343000" />
+      <workItem from="1776319260702" duration="81000" />
+      <workItem from="1776319492410" duration="3124000" />
+      <workItem from="1776324737481" duration="2561000" />
+      <workItem from="1776332474761" duration="6453000" />
     </task>
     <task id="LOCAL-00001" summary=":recycle: (proxy): 重构代理模块，移除ProxyType类并引入新的代理配置管理方式&#10;&#10;重构了代理模块，删除了`ProxyType`类，将代理配置从`config.php`中移出到独立的`proxyConfig.php`文件中。新增了`AListProxy`类，并修改了`ClashProxy`和`ProxyAbstract`类，使其不再依赖`ProxyType`。同时，`Application`类现在从`proxyConfig.php`加载代理配置，并动态实例化代理类。这些改动提高了代码的可维护性和扩展性。">
       <option name="closed" value="true" />
@@ -123,15 +124,102 @@
       <option name="project" value="LOCAL" />
       <updated>1752149935823</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary=":recycle: refactor(proxy): 重构代理模块，优化配置管理&#10;&#10;重构了代理模块，移除了 `ProxyType` 类，并将代理配置从&#10;`config.php` 中移至独立的 `proxyConfig.php` 文件中。&#10;同时，新增了 `AListProxy` 类，并修改了相关类以提高&#10;代码的可维护性和扩展性。">
+      <option name="closed" value="true" />
+      <created>1776315651934</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1776315651934</updated>
+    </task>
+    <task id="LOCAL-00003" summary=":sparkles: feat(core): 添加实例管理类">
+      <option name="closed" value="true" />
+      <created>1776333019759</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1776333019759</updated>
+    </task>
+    <task id="LOCAL-00004" summary=":goal_net: catch AppExitException in response handling&#10;增加对 AppExitException 的捕获，优化响应处理逻辑。">
+      <option name="closed" value="true" />
+      <created>1776333728136</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1776333728136</updated>
+    </task>
+    <task id="LOCAL-00005" summary=":sparkles: feat(proxy): 添加内容重写和请求转发功能&#10;&#10;实现内容重写器和请求构建器，支持重写 HTML/CSS 中的外部链接，&#10;并通过代理转发 HTTP 请求和响应。包括 URL 重写、响应处理和&#10;流式传输功能，提升代理模块的灵活性和可扩展性。">
+      <option name="closed" value="true" />
+      <created>1776341677851</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1776341677851</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="1a181fe1-6e87-438f-83f2-d5c669f2a5a8" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1a181fe1-6e87-438f-83f2-d5c669f2a5a8">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$/src/nova/plugin/proxy" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value=":recycle: (proxy): 重构代理模块，移除ProxyType类并引入新的代理配置管理方式&#10;&#10;重构了代理模块，删除了`ProxyType`类，将代理配置从`config.php`中移出到独立的`proxyConfig.php`文件中。新增了`AListProxy`类，并修改了`ClashProxy`和`ProxyAbstract`类，使其不再依赖`ProxyType`。同时，`Application`类现在从`proxyConfig.php`加载代理配置，并动态实例化代理类。这些改动提高了代码的可维护性和扩展性。" />
-    <option name="LAST_COMMIT_MESSAGE" value=":recycle: (proxy): 重构代理模块，移除ProxyType类并引入新的代理配置管理方式&#10;&#10;重构了代理模块，删除了`ProxyType`类，将代理配置从`config.php`中移出到独立的`proxyConfig.php`文件中。新增了`AListProxy`类，并修改了`ClashProxy`和`ProxyAbstract`类，使其不再依赖`ProxyType`。同时，`Application`类现在从`proxyConfig.php`加载代理配置，并动态实例化代理类。这些改动提高了代码的可维护性和扩展性。" />
+    <MESSAGE value=":recycle: refactor(proxy): 重构代理模块，优化配置管理&#10;&#10;重构了代理模块，移除了 `ProxyType` 类，并将代理配置从&#10;`config.php` 中移至独立的 `proxyConfig.php` 文件中。&#10;同时，新增了 `AListProxy` 类，并修改了相关类以提高&#10;代码的可维护性和扩展性。" />
+    <MESSAGE value=":sparkles: feat(core): 添加实例管理类" />
+    <MESSAGE value=":goal_net: catch AppExitException in response handling&#10;增加对 AppExitException 的捕获，优化响应处理逻辑。" />
+    <MESSAGE value=":sparkles: feat(proxy): 添加内容重写和请求转发功能&#10;&#10;实现内容重写器和请求构建器，支持重写 HTML/CSS 中的外部链接，&#10;并通过代理转发 HTTP 请求和响应。包括 URL 重写、响应处理和&#10;流式传输功能，提升代理模块的灵活性和可扩展性。" />
+    <option name="LAST_COMMIT_MESSAGE" value=":sparkles: feat(proxy): 添加内容重写和请求转发功能&#10;&#10;实现内容重写器和请求构建器，支持重写 HTML/CSS 中的外部链接，&#10;并通过代理转发 HTTP 请求和响应。包括 URL 重写、响应处理和&#10;流式传输功能，提升代理模块的灵活性和可扩展性。" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/app/static/components/formDialog/DialogForm.js</url>
+          <line>16</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
