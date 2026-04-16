@@ -12,18 +12,35 @@ declare(strict_types=1);
 
 namespace app;
 
+use app\plugins\PluginRegistry;
 use nova\framework\App;
 
-use const ROOT_PATH;
+use nova\framework\route\Route;
+use nova\framework\route\RouteObject;
+use function nova\framework\route;
 
 class Application extends App
 {
 
     public function onFrameworkStart(): void
     {
-
+        $proxyRoute = route("index","proxy","index");
+        Route::getInstance()
+            ->get('/proxy/{action}', route("index","main","{action}"))
+            ->post('/proxy/{action}', route("index","api","{action}"))
+            ->getOrPost('/', $proxyRoute)
+            ->put('/', $proxyRoute)
+            ->patch('/', $proxyRoute)
+            ->delete('/', $proxyRoute)
+            ->options('/', $proxyRoute)
+            ->getOrPost('/{path}', $proxyRoute)
+            ->put('/{path}', $proxyRoute)
+            ->patch('/{path}', $proxyRoute)
+            ->delete('/{path}', $proxyRoute)
+            ->options('/{path}', $proxyRoute);
     }
 
-    public const string SYSTEM_NAME =  "Nova App";
+
+    public const string SYSTEM_NAME =  "Nova Proxy";
 
 }

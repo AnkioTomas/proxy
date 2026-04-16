@@ -4,7 +4,37 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef61214b-9224-460e-adc3-e65da86818f2" name="更改" comment=":recycle: (proxy): 重构代理模块，移除ProxyType类并引入新的代理配置管理方式&#10;&#10;重构了代理模块，删除了`ProxyType`类，将代理配置从`config.php`中移出到独立的`proxyConfig.php`文件中。新增了`AListProxy`类，并修改了`ClashProxy`和`ProxyAbstract`类，使其不再依赖`ProxyType`。同时，`Application`类现在从`proxyConfig.php`加载代理配置，并动态实例化代理类。这些改动提高了代码的可维护性和扩展性。" />
+    <list default="true" id="ef61214b-9224-460e-adc3-e65da86818f2" name="更改" comment=":recycle: (proxy): 重构代理模块，移除ProxyType类并引入新的代理配置管理方式&#10;&#10;重构了代理模块，删除了`ProxyType`类，将代理配置从`config.php`中移出到独立的`proxyConfig.php`文件中。新增了`AListProxy`类，并修改了`ClashProxy`和`ProxyAbstract`类，使其不再依赖`ProxyType`。同时，`Application`类现在从`proxyConfig.php`加载代理配置，并动态实例化代理类。这些改动提高了代码的可维护性和扩展性。">
+      <change afterPath="$PROJECT_DIR$/src/app/controller/index/Api.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/controller/index/BaseController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/controller/index/Main.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/controller/index/Proxy.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/plugins/BasePlugin.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/plugins/Panel.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/static/components/captcha" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/static/components/dataTable" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/view/index/layout.tpl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/view/index/main/manage.tpl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/view/publicHeader.tpl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/view/publicScript.tpl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/nova/plugin/avatar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/nova/plugin/captcha" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/nova/plugin/cookie" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/nova/plugin/device" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/nova/plugin/http" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/nova/plugin/ip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/nova/plugin/login" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/nova/plugin/orm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/nova/plugin/proxy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/nova/plugin/tpl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/proxy.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitmodules" beforeDir="false" afterPath="$PROJECT_DIR$/.gitmodules" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nova.phar" beforeDir="false" afterPath="$PROJECT_DIR$/nova.phar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Application.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Application.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,26 +62,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/ankio/Documents/SourceCode/PHP/proxy&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "WebServerToolWindowPanel.toolwindow.highlight.mappings": "true",
+    "WebServerToolWindowPanel.toolwindow.highlight.symlinks": "true",
+    "WebServerToolWindowPanel.toolwindow.show.date": "false",
+    "WebServerToolWindowPanel.toolwindow.show.permissions": "false",
+    "WebServerToolWindowPanel.toolwindow.show.size": "false",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/ankio/Documents/SourceCode/PHP/proxy",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src/app/view" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -77,7 +113,7 @@
       <workItem from="1771250869824" duration="2888000" />
       <workItem from="1776150359947" duration="1169000" />
       <workItem from="1776178788146" duration="57000" />
-      <workItem from="1776219227243" duration="622000" />
+      <workItem from="1776219227243" duration="23040000" />
     </task>
     <task id="LOCAL-00001" summary=":recycle: (proxy): 重构代理模块，移除ProxyType类并引入新的代理配置管理方式&#10;&#10;重构了代理模块，删除了`ProxyType`类，将代理配置从`config.php`中移出到独立的`proxyConfig.php`文件中。新增了`AListProxy`类，并修改了`ClashProxy`和`ProxyAbstract`类，使其不再依赖`ProxyType`。同时，`Application`类现在从`proxyConfig.php`加载代理配置，并动态实例化代理类。这些改动提高了代码的可维护性和扩展性。">
       <option name="closed" value="true" />
