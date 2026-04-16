@@ -4,24 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef61214b-9224-460e-adc3-e65da86818f2" name="更改" comment=":sparkles: feat(proxy): 添加内容重写和请求转发功能&#10;&#10;实现内容重写器和请求构建器，支持重写 HTML/CSS 中的外部链接，&#10;并通过代理转发 HTTP 请求和响应。包括 URL 重写、响应处理和&#10;流式传输功能，提升代理模块的灵活性和可扩展性。">
-      <change afterPath="$PROJECT_DIR$/src/app/plugins/Panel.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/service/ProxyConfigService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/static/components/formDialog" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/static/js/manage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitmodules" beforeDir="false" afterPath="$PROJECT_DIR$/.gitmodules" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="ef61214b-9224-460e-adc3-e65da86818f2" name="更改" comment=":sparkles: feat(proxy): 添加代理配置管理功能&#10;&#10;实现了代理配置的增删改查功能，支持动态加载插件选项。&#10;新增了相关 API 接口，优化了代理模块的可维护性和扩展性。">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nova.phar" beforeDir="false" afterPath="$PROJECT_DIR$/nova.phar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Application.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Application.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/controller/index/Api.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/controller/index/Api.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/controller/index/BaseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/controller/index/BaseController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/controller/index/Proxy.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/controller/index/Proxy.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/plugins/BasePlugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/plugins/BasePlugin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/plugins/Panel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/plugins/Panel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/view/index/main/manage.tpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/index/main/manage.tpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/nova/framework" beforeDir="false" afterPath="$PROJECT_DIR$/src/nova/framework" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/plugins/Panel.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/plugins/Panel/Panel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/plugins/Panel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/plugins/Panel/Panel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/plugins/PluginRegistry.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/service/ProxyConfigService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/service/ProxyConfigService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/nova/plugin/proxy" beforeDir="false" afterPath="$PROJECT_DIR$/src/nova/plugin/proxy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/proxy.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/proxy.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +106,7 @@
       <workItem from="1776319260702" duration="81000" />
       <workItem from="1776319492410" duration="3124000" />
       <workItem from="1776324737481" duration="2561000" />
-      <workItem from="1776332474761" duration="6453000" />
+      <workItem from="1776332474761" duration="7224000" />
     </task>
     <task id="LOCAL-00001" summary=":recycle: (proxy): 重构代理模块，移除ProxyType类并引入新的代理配置管理方式&#10;&#10;重构了代理模块，删除了`ProxyType`类，将代理配置从`config.php`中移出到独立的`proxyConfig.php`文件中。新增了`AListProxy`类，并修改了`ClashProxy`和`ProxyAbstract`类，使其不再依赖`ProxyType`。同时，`Application`类现在从`proxyConfig.php`加载代理配置，并动态实例化代理类。这些改动提高了代码的可维护性和扩展性。">
       <option name="closed" value="true" />
@@ -156,7 +148,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776341677851</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary=":sparkles: feat(proxy): 添加代理配置管理功能&#10;&#10;实现了代理配置的增删改查功能，支持动态加载插件选项。&#10;新增了相关 API 接口，优化了代理模块的可维护性和扩展性。">
+      <option name="closed" value="true" />
+      <created>1776341900936</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1776341900936</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -204,7 +204,8 @@
     <MESSAGE value=":sparkles: feat(core): 添加实例管理类" />
     <MESSAGE value=":goal_net: catch AppExitException in response handling&#10;增加对 AppExitException 的捕获，优化响应处理逻辑。" />
     <MESSAGE value=":sparkles: feat(proxy): 添加内容重写和请求转发功能&#10;&#10;实现内容重写器和请求构建器，支持重写 HTML/CSS 中的外部链接，&#10;并通过代理转发 HTTP 请求和响应。包括 URL 重写、响应处理和&#10;流式传输功能，提升代理模块的灵活性和可扩展性。" />
-    <option name="LAST_COMMIT_MESSAGE" value=":sparkles: feat(proxy): 添加内容重写和请求转发功能&#10;&#10;实现内容重写器和请求构建器，支持重写 HTML/CSS 中的外部链接，&#10;并通过代理转发 HTTP 请求和响应。包括 URL 重写、响应处理和&#10;流式传输功能，提升代理模块的灵活性和可扩展性。" />
+    <MESSAGE value=":sparkles: feat(proxy): 添加代理配置管理功能&#10;&#10;实现了代理配置的增删改查功能，支持动态加载插件选项。&#10;新增了相关 API 接口，优化了代理模块的可维护性和扩展性。" />
+    <option name="LAST_COMMIT_MESSAGE" value=":sparkles: feat(proxy): 添加代理配置管理功能&#10;&#10;实现了代理配置的增删改查功能，支持动态加载插件选项。&#10;新增了相关 API 接口，优化了代理模块的可维护性和扩展性。" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

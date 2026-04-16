@@ -15,7 +15,7 @@ class Proxy extends BaseController
     {
         $parent =  parent::init();
         if (!empty($parent)) return  $parent;
-        if ($this->proxyConfig === null) {
+        if (empty($this->proxyConfig)) {
             return $this->redirectTo("/proxy/manage");
         }
        return null;
@@ -27,7 +27,6 @@ class Proxy extends BaseController
     }
     public function indexPath(string $path): Response
     {
-
         /** @var BasePlugin $plugin */
         $plugin = new $this->proxyConfig['plugin'];
         $config = $this->proxyConfig;

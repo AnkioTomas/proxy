@@ -2,7 +2,6 @@
 
 namespace app\controller\index;
 
-use app\plugins\PluginRegistry;
 use app\service\ProxyConfigService;
 use nova\framework\http\Response;
 use nova\framework\route\Controller;

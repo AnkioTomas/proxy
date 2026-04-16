@@ -130,11 +130,11 @@ class ProxyConfigService extends Instance
 
         foreach ($files as $file) {
             $className = pathinfo($file, PATHINFO_FILENAME);
-            if ($className === 'BasePlugin' || $className === 'PluginRegistry') {
+            if ($className === 'BasePlugin' ) {
                 continue;
             }
 
-            $fqcn = 'app\\plugins\\' . $className;
+            $fqcn = 'app\\plugins\\' . $className.'\\'.$className;
             if (!class_exists($fqcn) || !is_subclass_of($fqcn, BasePlugin::class)) {
                 continue;
             }
@@ -159,7 +159,7 @@ class ProxyConfigService extends Instance
             if (!is_array($entry)) {
                 continue;
             }
-            $rows[] = $this->formatEntry($domain, $entry);
+            $rows[] = ['domain'=>$domain, ...$entry];
         }
 
         return $rows;

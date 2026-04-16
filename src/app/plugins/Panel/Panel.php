@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace app\plugins;
+namespace app\plugins\Panel;
 
-use nova\framework\core\Logger;
-use nova\plugin\login\db\Model\UserModel;
+use app\plugins\BasePlugin;
 
 class Panel extends BasePlugin
 {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 return [
     'panel.ankio.icu' => [
-        'plugin' => 'app\\plugins\\Panel',
+        'plugin' => 'app\\plugins\\Panel\\Panel',
         'target' => 'http://192.168.100.200:52045',
         'username' => '',
         'password' => '',
