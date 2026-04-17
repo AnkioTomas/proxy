@@ -128,7 +128,7 @@ class ProxyConfigService extends Instance
         $options = [];
         $files = glob($dir . DIRECTORY_SEPARATOR . '*.php') ?: [];
 
-        foreach ($files as $file) {
+        foreach (scandir($dir) as $file) {
             $className = pathinfo($file, PATHINFO_FILENAME);
             if ($className === 'BasePlugin' ) {
                 continue;
@@ -144,9 +144,6 @@ class ProxyConfigService extends Instance
                 'label' => $className,
             ];
         }
-
-        usort($options, static fn(array $a, array $b): int => strcmp((string)$a['label'], (string)$b['label']));
-
         return $options;
     }
 
