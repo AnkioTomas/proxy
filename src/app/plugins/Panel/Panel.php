@@ -5,19 +5,30 @@ declare(strict_types=1);
 namespace app\plugins\Panel;
 
 use app\plugins\BasePlugin;
+use nova\plugin\login\LoginManager;
 
 class Panel extends BasePlugin
 {
-    public function responseInjector(string $body, array $headers, string $path, array $config): string
-    {
-        if (str_ends_with($path, '.js') && str_starts_with($path, '/assets/js/menu-')) {
-            return $body.str_replace(
-                ['[username]','[password]'],
-                [$config['username'],$config['password']]
-                , file_get_contents(__DIR__."/Panel.js"));
-        }
 
-        return $body;
+    public function loginPath(): string
+    {
+        return '/tomas';
     }
 
+
+    public function injectLoginJs($username,$password):string
+    {
+        return <<<EOF
+<script>
+(function() {
+    waitForElement("[name=username]").then(input => {
+        simulateTyping(document.querySelector('[name=username]'), "$username")
+        simulateTyping(document.querySelector('[name=password]'), "$password")
+        simulateHumanClick(document.querySelector('.el-checkbox__label'));
+        simulateHumanClick(document.querySelector('.el-form-item__content button'));
+    });
+})();
+</script>
+EOF;
+    }
 }

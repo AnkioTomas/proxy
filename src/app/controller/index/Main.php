@@ -6,6 +6,7 @@ namespace app\controller\index;
 
 use app\Application;
 use nova\framework\http\Response;
+use nova\plugin\login\LoginManager;
 use nova\plugin\login\manager\PwdLoginManager;
 use nova\plugin\login\manager\SSOLoginManager;
 use nova\plugin\tpl\ViewResponse;
@@ -21,6 +22,7 @@ class Main extends BaseController
         if ($response instanceof Response) {
             return $response;
         }
+        if (empty($this->currentUser)) return $this->redirectTo(LoginManager::getInstance()->redirectLogin());
 
         if (!empty($this->proxyConfig)) {
             return $this->redirectTo('/403');

@@ -6,6 +6,7 @@ use app\plugins\BasePlugin;
 use nova\framework\core\Context;
 use nova\framework\exception\ErrorHandler;
 use nova\framework\http\Response;
+use nova\plugin\login\LoginManager;
 use nova\plugin\proxy\ProxyResponse;
 use function nova\framework\dump;
 
@@ -39,6 +40,8 @@ class Proxy extends BaseController
 
         $user = $this->currentUser;
 
+        $plugin->isLogin = !empty($user);
+
         // TODO 未来可能添加其他的sso功能
 
         return (new ProxyResponse(
@@ -48,9 +51,18 @@ class Proxy extends BaseController
         ))
             ->setTimeout((int)$this->proxyConfig['timeout'])
             ->setRequestInterceptor(function (string $rawRequest, array $urlInfo) use ($plugin): array {
+                $path = $urlInfo['path'] ?? '';
+                if (str_starts_with($path, $plugin->loginPath())) {
+                    if (!$plugin->isLogin) {
+                        return [$rawRequest,$plugin->inject2LoginJs()];
+                    }
+                }
                 return $plugin->requestInjector($rawRequest, $urlInfo);
             })
             ->setResponseInjector(function (string $body, array $headers, string $path) use ($plugin, $config): string {
+                if (str_starts_with($path, $plugin->loginPath())) {
+                    return $plugin->injectLoginInfo($body,$config);
+                }
                 return $plugin->responseInjector($body, $headers, $path, $config);
             })
             ->setErrorHandler(function (\Throwable $e): void {

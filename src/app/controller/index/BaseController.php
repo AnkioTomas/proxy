@@ -17,9 +17,8 @@ class BaseController extends Controller
     public function init(): ?Response
     {
         $this->currentUser = LoginManager::getInstance()->checkLogin();
-        if (empty($this->currentUser)) return $this->redirectTo(LoginManager::getInstance()->redirectLogin());
         // 这里目前只允许管理员登录
-        if (!$this->currentUser->hasPermission('all')){
+        if ($this->currentUser && !$this->currentUser->hasPermission('all')){
             return Response::asText('403 Forbidden',[],403);
         }
 

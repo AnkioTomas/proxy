@@ -4,21 +4,13 @@ declare(strict_types=1);
 
 namespace app\plugins;
 
-use nova\plugin\login\db\Model\UserModel;
+use nova\plugin\login\LoginManager;
 
 abstract class BasePlugin
 {
 
 
-    public function tryInjectRequest(): bool
-    {
-        return false;
-    }
-
-    public function tryInjectResponse(): bool
-    {
-        return false;
-    }
+    public bool $isLogin = false;
 
     /**
      * Allow plugin to directly mutate the outbound raw request.
@@ -36,4 +28,27 @@ abstract class BasePlugin
     {
         return $body;
     }
+
+    public function injectLoginInfo(string $body,array $config): string
+    {
+        if ($this->isLogin){
+            $username = $config['username'] ?? '';
+            $password = $config['password'] ?? '';
+            return $body.$this->injectLoginJs($username,$password);
+
+        }else{
+            return $this->inject2LoginJs();
+        }
+    }
+
+    abstract function injectLoginJs($username,$password):string;
+
+    public function inject2LoginJs(): string
+    {
+        $url = LoginManager::getInstance()->redirectLogin();
+        return '<script>location.replace("'.$url.'")</script>';
+    }
+
+
+    abstract function loginPath():string;
 }
