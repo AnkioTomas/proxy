@@ -22,25 +22,6 @@ class Proxy extends BaseController
        return null;
     }
 
-    function getWsTarget():Response
-    {
-        // 1. 获取 Lua 传过来的原始 Host 和 URI
-        // 注意：如果是通过 capture 传参，从 $this->request->get() 获取
-        $uri = $this->request->get('uri', '/');
-
-        // 2. 匹配你的 proxyConfig
-        // 假设你有一套逻辑：根据 $host 找到对应的目标 $target
-        // ... 匹配逻辑 ...
-
-        $targetBase = (string)$this->proxyConfig['target']; // 例如 http://10.0.0.5:8080
-
-        // 拼接路径
-        $finalUrl = rtrim($targetBase, '/') . $uri;
-
-        // 直接输出字符串，不要带任何 HTML 标签
-        return Response::asText($finalUrl);
-    }
-
 
     public function index(): ?Response
     {
@@ -62,7 +43,8 @@ class Proxy extends BaseController
 
         $plugin->isLogin = !empty($user);
 
-        // TODO 未来可能添加其他的sso功能
+        // Lua 路由决策已通过 X-Route-Rewrite 头告知是否为登录注入路径
+        $isLoginPath = $this->request->getHeaderValue('X-Route-Rewrite') === '1';
 
         return (new ProxyResponse(
             $targetUri,
@@ -70,23 +52,16 @@ class Proxy extends BaseController
             (string)$this->proxyConfig['proxy_prefix']
         ))
             ->setTimeout((int)$this->proxyConfig['timeout'])
-            ->setRequestInterceptor(function (string $rawRequest, array $urlInfo) use ($plugin): array {
-                $path = $urlInfo['path'] ?? '';
-                foreach ($plugin->loginPath() as $loginPath) {
-                    if (str_starts_with($path, $loginPath)) {
-                        if (!$plugin->isLogin) {
-                            return [$rawRequest,$plugin->inject2LoginJs()];
-                        }
-                    }
+            ->setRequestInterceptor(function (string $rawRequest, array $urlInfo) use ($plugin, $isLoginPath): array {
+                if ($isLoginPath && !$plugin->isLogin) {
+                    return [$rawRequest, $plugin->inject2LoginJs()];
                 }
                 return $plugin->requestInjector($rawRequest, $urlInfo);
             })
-            ->setResponseInjector(function (string $body, array $headers, string $path) use ($plugin, $config): string {
-               foreach ($plugin->loginPath() as $loginPath) {
-                   if (str_starts_with($path, $loginPath)) {
-                       return $plugin->injectLoginInfo($body,$config);
-                   }
-               }
+            ->setResponseInjector(function (string $body, array $headers, string $path) use ($plugin, $config, $isLoginPath): string {
+                if ($isLoginPath) {
+                    return $plugin->injectLoginInfo($body, $config);
+                }
                 return $plugin->responseInjector($body, $headers, $path, $config);
             })
             ->setErrorHandler(function (\Throwable $e): void {

@@ -27,7 +27,7 @@ class Application extends App
         $proxyRoute = route("index","proxy","index");
         $proxyRoute2 = route("index","proxy","indexPath");
         Route::getInstance()
-            ->get('/proxy/get_ws_target', route("index","proxy","getWsTarget"))
+            ->getOrPost('/proxy/route_check', route("index","route","check"))
             ->get('/proxy/api/{action}', route("index", "api", "{action}"))
             ->post('/proxy/api/{action}', route("index", "api", "{action}"))
             ->get('/proxy/{action}', route("index","main","{action}"))
