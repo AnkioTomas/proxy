@@ -10,9 +10,9 @@ use nova\plugin\login\LoginManager;
 class Panel extends BasePlugin
 {
 
-    public function loginPath(): string
+    public function loginPath(): array
     {
-        return '/tomas';
+        return ['/tomas'];
     }
 
 

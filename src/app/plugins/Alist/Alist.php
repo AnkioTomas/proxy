@@ -14,9 +14,9 @@ class Alist extends BasePlugin
     }
 
 
-    public function loginPath(): string
+    public function loginPath(): array
     {
-        return '/@login';
+        return ['/@login'];
     }
 
 

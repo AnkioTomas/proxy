@@ -50,5 +50,5 @@ abstract class BasePlugin
     }
 
 
-    abstract function loginPath():string;
+    abstract function loginPath():array;
 }
