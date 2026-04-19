@@ -30,7 +30,7 @@ class Proxy extends BaseController
     public function indexPath(string $path): Response
     {
         /** @var BasePlugin $plugin */
-        $plugin = new $this->proxyConfig['plugin'];
+        $plugin = new $this->proxyConfig['plugin']($this->proxyConfig);
         $config = $this->proxyConfig;
 
 
@@ -58,11 +58,11 @@ class Proxy extends BaseController
                 }
                 return $plugin->requestInjector($rawRequest, $urlInfo);
             })
-            ->setResponseInjector(function (string $body, array $headers, string $path) use ($plugin, $config, $isLoginPath): string {
+            ->setResponseInjector(function (string $body, array $headers, string $path) use ($plugin, $isLoginPath): string {
                 if ($isLoginPath) {
-                    return $plugin->injectLoginInfo($body, $config);
+                    return $plugin->injectLoginInfo($body);
                 }
-                return $plugin->responseInjector($body, $headers, $path, $config);
+                return $plugin->responseInjector($body, $headers, $path);
             })
             ->setErrorHandler(function (\Throwable $e): void {
                 if (Context::instance()->isDebug()){

@@ -10,6 +10,10 @@ abstract class BasePlugin
 {
 
 
+    public function __construct(protected array $config)
+    {
+    }
+
     public bool $isLogin = false;
 
     /**
@@ -24,16 +28,16 @@ abstract class BasePlugin
         return [$rawRequest, ''];
     }
 
-    public function responseInjector(string $body, array $headers, string $path, array $config): string
+    public function responseInjector(string $body, array $headers, string $path): string
     {
         return $body;
     }
 
-    public function injectLoginInfo(string $body,array $config): string
+    public function injectLoginInfo(string $body): string
     {
         if ($this->isLogin){
-            $username = $config['username'] ?? '';
-            $password = $config['password'] ?? '';
+            $username = $this->config['username'] ?? '';
+            $password = $this->config['password'] ?? '';
             return $body.$this->injectLoginJs($username,$password);
 
         }else{

@@ -7,11 +7,6 @@ use nova\plugin\login\LoginManager;
 
 class Alist extends BasePlugin
 {
-    public function responseInjector(string $body, array $headers, string $path, array $config): string
-    {
-
-        return $body;
-    }
 
 
     public function loginPath(): array

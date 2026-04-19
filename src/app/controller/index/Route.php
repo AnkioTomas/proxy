@@ -75,7 +75,7 @@ class Route extends BaseController
         // 3. 实例化插件，判断当前 path 是否属于"登录注入路径"
         $pluginClass = (string)($this->proxyConfig['plugin'] ?? '');
         /** @var BasePlugin $plugin */
-        $plugin = new $pluginClass();
+        $plugin = new $pluginClass($this->proxyConfig);
         $this->currentUser = LoginManager::getInstance()->checkLogin();
         $loginPaths = $plugin->loginPath();
         foreach ($loginPaths as $loginPath) {
