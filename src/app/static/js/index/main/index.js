@@ -24,7 +24,12 @@ window.pageOnLoad = function () {
     }
 
     function writeCookie(name, value) {
-        document.cookie = name + '=' + encodeURIComponent(value) + '; path=/; SameSite=Lax';
+        // 关闭时删除 Cookie，避免留下 proxy_debug=0 被某些层当假值/脏状态
+        if (value === '' || value === '0') {
+            document.cookie = name + '=; path=/; Max-Age=0; SameSite=Lax';
+            return;
+        }
+        document.cookie = name + '=' + encodeURIComponent(value) + '; path=/; Max-Age=31536000; SameSite=Lax';
     }
 
     function applyWallpaper() {

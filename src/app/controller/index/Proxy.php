@@ -148,26 +148,27 @@ class Proxy extends BaseController
     private function backButtonHtml(): string
     {
         return <<<'HTML'
-<a id="duckgo-back" href="/" title="返回鸭鸭Go"
+<a id="duckgo-back" data-duckgo-nav href="/" title="返回鸭鸭Go"
    style="position:fixed;left:16px;bottom:16px;z-index:2147483646;display:inline-flex;align-items:center;gap:6px;padding:10px 14px;background:#111;color:#fff;border-radius:999px;font:600 13px/1.2 system-ui,-apple-system,sans-serif;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.28);opacity:.92">← 返回鸭鸭Go</a>
 HTML;
     }
 
     /**
-     * 调试套件：Eruda 核心 + 官方插件全套。
-     * vConsole 内置面板能力已被 Eruda 覆盖，双开只会抢入口，不值得。
+     * 调试套件：飞书远程调试 + Eruda 核心及官方插件。
+     * 飞书脚本用于客户端内 remote debug；Eruda 覆盖通用移动端控制台。
      */
     private function debugToolkitHtml(): string
     {
         return <<<'HTML'
-<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-<script src="https://cdn.jsdelivr.net/npm/eruda-features"></script>
-<script src="https://cdn.jsdelivr.net/npm/eruda-timing"></script>
-<script src="https://cdn.jsdelivr.net/npm/eruda-code"></script>
-<script src="https://cdn.jsdelivr.net/npm/eruda-benchmark"></script>
-<script src="https://cdn.jsdelivr.net/npm/eruda-geolocation"></script>
-<script src="https://cdn.jsdelivr.net/npm/eruda-orientation"></script>
-<script src="https://cdn.jsdelivr.net/npm/eruda-touches"></script>
+<script data-duckgo-nav src="https://lf-package-cn.feishucdn.com/obj/feishu-static/op/fe/devtools_frontend/remote-debug-0.0.1-alpha.6.js"></script>
+<script data-duckgo-nav src="https://cdn.jsdelivr.net/npm/eruda"></script>
+<script data-duckgo-nav src="https://cdn.jsdelivr.net/npm/eruda-features"></script>
+<script data-duckgo-nav src="https://cdn.jsdelivr.net/npm/eruda-timing"></script>
+<script data-duckgo-nav src="https://cdn.jsdelivr.net/npm/eruda-code"></script>
+<script data-duckgo-nav src="https://cdn.jsdelivr.net/npm/eruda-benchmark"></script>
+<script data-duckgo-nav src="https://cdn.jsdelivr.net/npm/eruda-geolocation"></script>
+<script data-duckgo-nav src="https://cdn.jsdelivr.net/npm/eruda-orientation"></script>
+<script data-duckgo-nav src="https://cdn.jsdelivr.net/npm/eruda-touches"></script>
 <script>
 (function () {
   function boot() {

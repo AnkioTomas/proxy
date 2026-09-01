@@ -54,7 +54,7 @@ class ProxyUrlBar extends HTMLElement {
                     <div class="input-wrap">
                         <mdui-text-field id="input" variant="outlined" type="url" inputmode="url" placeholder="https://example.com/path" clearable></mdui-text-field>
                     </div>
-                    <mdui-button-icon id="debug" icon="bug_report" title="调试"></mdui-button-icon>
+                    <mdui-button-icon id="debug" selectable icon="bug_report" title="调试"></mdui-button-icon>
                     <mdui-button id="go" variant="filled" end-icon="arrow_forward">Go</mdui-button>
                 </div>
             </mdui-card>
@@ -65,12 +65,14 @@ class ProxyUrlBar extends HTMLElement {
         this._debug = this.shadowRoot.getElementById('debug');
 
         this._go.addEventListener('click', () => this._submit());
-        this._debug.addEventListener('click', () => {
-            this.debug = !this.debug;
+        // selectable 自己切换 selected；再用 click 手动取反会双重翻转 → 关一次就再也开不了
+        this._debug.addEventListener('change', () => {
+            this._debugOn = !!this._debug.selected;
+            this._debug.variant = this._debugOn ? 'tonal' : 'standard';
             this.dispatchEvent(new CustomEvent('proxy-debug-change', {
                 bubbles: true,
                 composed: true,
-                detail: { debug: this.debug }
+                detail: { debug: this._debugOn }
             }));
         });
         this._input.addEventListener('keydown', (e) => {
@@ -106,13 +108,8 @@ class ProxyUrlBar extends HTMLElement {
         if (!this._debug) {
             return;
         }
-        if (this._debugOn) {
-            this._debug.setAttribute('selected', '');
-            this._debug.variant = 'filled-tonal';
-        } else {
-            this._debug.removeAttribute('selected');
-            this._debug.variant = 'standard';
-        }
+        this._debug.selected = this._debugOn;
+        this._debug.variant = this._debugOn ? 'tonal' : 'standard';
     }
 
     _submit() {
