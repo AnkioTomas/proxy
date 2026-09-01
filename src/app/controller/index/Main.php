@@ -4,46 +4,42 @@ declare(strict_types=1);
 
 namespace app\controller\index;
 
+use app\Application;
 use nova\framework\http\Response;
-use nova\plugin\login\controller\BaseViewController;
-use nova\plugin\tpl\Pjax;
+use nova\framework\route\Controller;
+use nova\plugin\login\db\Model\UserModel;
+use nova\plugin\login\LoginManager;
+use nova\plugin\tpl\ViewResponse;
 
-class Main extends BaseViewController
+class Main extends Controller
 {
+    protected ViewResponse $viewResponse;
+    protected ?UserModel $userModel = null;
+
     public function init(): ?Response
     {
         $response = parent::init();
-
-        if ($this->userModel !== null
-            && !in_array('all', $this->userModel->role()->permissions, true)) {
-            return Pjax::responseError(403);
+        if ($response instanceof Response) {
+            return $response;
         }
 
-        return $response;
+        $this->userModel = LoginManager::getInstance()->checkLogin();
+
+        $this->viewResponse = new ViewResponse();
+        $this->viewResponse->init($this->request->isPjax() ? '' : 'layout', [
+            'title' => Application::SYSTEM_NAME,
+            'user' => $this->userModel,
+            'userDisplayName' => $this->userModel?->display_name ?? '',
+            'userRole' => $this->userModel?->role()?->name ?? '',
+            'login' => '/index/login/index',
+            'isLogin' => $this->userModel !== null,
+        ]);
+
+        return null;
     }
 
-    /**
-     * @return array<int, array<string, mixed>>
-     */
-    protected function getMenu(): array
+    public function index(): Response
     {
-        return [
-            [
-                'title' => '首页',
-                'url' => '/',
-                'icon' => 'home',
-                'pjax' => true,
-            ],
-        ];
-    }
-
-    public function home(): Response
-    {
-        return $this->viewResponse->asTpl();
-    }
-
-    public function legacyRedirect(): Response
-    {
-        return Pjax::redirectTo('/');
+        return $this->viewResponse->asTpl('index');
     }
 }

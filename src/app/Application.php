@@ -13,8 +13,8 @@ declare(strict_types=1);
 namespace app;
 
 use nova\framework\App;
-use nova\framework\event\EventManager;
 use nova\framework\route\Route;
+use nova\plugin\login\LoginTpl;
 use function nova\framework\route;
 
 class Application extends App
@@ -22,20 +22,19 @@ class Application extends App
 
     public function onFrameworkStart(): void
     {
-        $adminRoute = ['index', 'main'];
-        EventManager::trigger('admin.router', $adminRoute);
+        LoginTpl::getInstance()->registerRouter('home', 'main');
 
         $goRoute = route('index', 'proxy', 'indexPath');
-        $legacyRedirect = route('index', 'main', 'legacyRedirect');
 
         Route::getInstance()
-            ->get('/', route('index', 'main', 'home'))
+            ->get('/', route('index', 'main', 'index'))
+            ->get('/home', route('home', 'main', 'index'))
             ->get('/api/quicklink/list', route('index', 'quicklink', 'list'))
             ->post('/api/quicklink/save', route('index', 'quicklink', 'save'))
             ->post('/api/quicklink/remove', route('index', 'quicklink', 'remove'))
-            ->get('/proxy/manage', $legacyRedirect)
-            ->get('/proxy/account', $legacyRedirect)
-            ->get('/proxy/sso', $legacyRedirect)
+            ->get('/proxy/manage', route('home', 'main', 'index'))
+            ->get('/proxy/account', route('home', 'main', 'index'))
+            ->get('/proxy/sso', route('home', 'main', 'index'))
             ->getOrPost('/go/{path}', $goRoute)
             ->put('/go/{path}', $goRoute)
             ->patch('/go/{path}', $goRoute)

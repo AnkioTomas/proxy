@@ -1,61 +1,83 @@
 <!doctype html>
-<html lang="zh-CN" class="mdui-theme-light scroll-line">
+<html lang="zh-CN" class="mdui-theme-auto scroll-line">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
     <meta name="renderer" content="webkit"/>
     <title id="title">{$title}</title>
     {include file="publicHeader.tpl"}
+    <style>
+        .top-bar {
+            transition: background-color .3s;
+        }
+        .top-bar:not([scrolling]) {
+            background: transparent !important;
+            --bar-icon-color: var(--mdui-color-on-surface-variant-dark);
+        }
+        .top-bar:not([scrolling]) .top-bar-utils theme-switcher::part(trigger-icon),
+        .top-bar:not([scrolling]) .top-bar-utils lang-switcher::part(trigger-icon),
+        .top-bar:not([scrolling]) .top-bar-utils > mdui-button-icon {
+            --mdui-color-on-surface-variant: var(--bar-icon-color);
+            color: rgb(var(--bar-icon-color));
+        }
+        .top-bar:not([scrolling]) .layout-header-user-info [slot="trigger"] {
+            color: rgb(var(--bar-icon-color));
+        }
+    </style>
     <style id="style"></style>
+    <script>
+        window.__userLogged = '{$isLogin}' === '1';
+    </script>
 </head>
 
 <body class="bg">
 
-<mdui-layout class="">
-    <mdui-top-app-bar scroll-behavior="elevate" scroll-target=".layout-main" class="position-fixed">
-        <mdui-button-icon icon="menu" id="navigation-drawer-switch"></mdui-button-icon>
-        <mdui-top-app-bar-title>{$title}</mdui-top-app-bar-title>
+<mdui-layout class="scroll-line">
+    <mdui-top-app-bar scroll-behavior="elevate" scroll-target=".layout-main" class="position-fixed top-bar">
         <div style="flex-grow: 1"></div>
-        <mdui-button-icon icon="home" href="/"></mdui-button-icon>
-        <theme-switcher iconBtn="true"></theme-switcher>
-        <lang-switcher iconBtn="true"></lang-switcher>
-    </mdui-top-app-bar>
+        <div class="layout-header-right d-flex items-center gap-2">
+            <div class="top-bar-utils d-flex items-center gap-2">
+                <theme-switcher iconBtn="true"></theme-switcher>
+                <lang-switcher iconBtn="true"></lang-switcher>
+            </div>
 
-    <mdui-navigation-drawer open class="navigation-drawer position-fixed" id="navigation-drawer" close-on-overlay-click>
-        <mdui-list class="m-2">
-            {foreach $menuConfig as $item}
-                {if isset($item.sub)}
-                    <mdui-collapse>
-                        <mdui-collapse-item value="item-{$item@index}">
-                            <mdui-list-item slot="header" rounded icon="{$item.icon}">
-                                <span>{$item.title}</span>
-                                <mdui-icon slot="end-icon" name="keyboard_arrow_left"></mdui-icon>
-                            </mdui-list-item>
-                            <div style="margin-left: 2.5rem">
-                                {foreach $item.sub as $sub}
-                                    <mdui-list-item rounded data-match="{isset($sub['match'])?$sub['match']:''}" data-pjax="{$sub.pjax ? 'true' : 'false'}" data-target="{isset($sub['self']) ? 'self' : ''}" data-link="{$sub.url}" icon="{$sub.icon}">{$sub.title}</mdui-list-item>
-                                {/foreach}
+            {if $user == null}
+                <mdui-button-icon icon="login" href="{$login}"></mdui-button-icon>
+            {else}
+                <mdui-dropdown class="layout-header-user-info">
+                    <span slot="trigger" class="p-0">
+                        {if $user->avatar != ''}
+                            <mdui-avatar src="{$user->avatar}"></mdui-avatar>
+                        {else}
+                            <mdui-avatar icon="account_circle"></mdui-avatar>
+                        {/if}
+                        <span style="color:rgba(var(--bar-icon-color))">{$userDisplayName}</span>
+                    </span>
+                    <mdui-menu>
+                        <mdui-menu-item disabled>
+                            <div style="display:flex;flex-direction:column;gap:0.15rem;min-width:10rem;">
+                                <span style="font-size:0.85rem;opacity:0.72;">{$userRole}</span>
+                                <span style="font-size:0.8rem;opacity:0.6;">@{$user->username}</span>
                             </div>
-                        </mdui-collapse-item>
-                    </mdui-collapse>
-                {else}
-                    <mdui-list-item rounded data-match="{isset($sub['match'])?$sub['match']:''}" data-pjax="{$item.pjax ? 'true' : 'false'}" data-target="{isset($sub['self'])  ? 'self' : ''}" data-link="{$item.url}" icon="{$item.icon}">{$item.title}</mdui-list-item>
-                {/if}
-            {/foreach}
-        </mdui-list>
-    </mdui-navigation-drawer>
+                        </mdui-menu-item>
+                        <mdui-divider></mdui-divider>
+                        <mdui-menu-item icon="dashboard" href="/home">后台管理</mdui-menu-item>
+                        <mdui-menu-item icon="lock" href="/login/pwd">修改密码</mdui-menu-item>
+                        <mdui-menu-item icon="logout" href="/login/logout">退出登录</mdui-menu-item>
+                    </mdui-menu>
+                </mdui-dropdown>
+            {/if}
+        </div>
+    </mdui-top-app-bar>
 
     <mdui-layout-main class="layout-main">
         <div id="bodyContainer">
-            <div id="container" class="container mt-0">
-
-            </div>
+            <div id="container" class="mt-0"></div>
         </div>
-        </mdui-layout-main>
-
-
-
+        <footer class="no-translate text-center flex-shrink-0 mt-auto" style="min-height: 60px; padding: 20px 0;color: white">© {date('Y')} Ankio. All rights reserved.</footer>
+    </mdui-layout-main>
 </mdui-layout>
+
 {if isset($__template_file) && $__template_file}
     <article id="page" hidden>
         {include file=$__template_file}
@@ -65,4 +87,3 @@
 {include file="publicScript.tpl"}
 </body>
 </html>
-
