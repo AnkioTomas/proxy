@@ -4,9 +4,6 @@
 [submodule "src/app/static/framework"]
     path = src/app/static/framework
     url = https://github.com/NovaPHPOrgUI/framework
-[submodule "src/nova/plugin/workerman"]
-    path = src/nova/plugin/workerman
-    url = https://github.com/NovaPHPOrg/nova-workerman
 [submodule "src/nova/plugin/proxy"]
     path = src/nova/plugin/proxy
     url = https://github.com/NovaPHPOrg/nova-proxy
@@ -31,9 +28,6 @@
 [submodule "src/nova/plugin/device"]
     path = src/nova/plugin/device
     url = https://github.com/NovaPHPOrg/nova-device
-[submodule "src/nova/plugin/ip"]
-    path = src/nova/plugin/ip
-    url = https://github.com/NovaPHPOrg/nova-ip
 [submodule "src/nova/plugin/orm"]
     path = src/nova/plugin/orm
     url = https://github.com/NovaPHPOrg/nova-orm
