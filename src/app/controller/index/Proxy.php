@@ -25,12 +25,15 @@ class Proxy extends BaseController
 
         $debug = (string)Cookie::getInstance()->get('proxy_debug', '') === '1';
 
-        $proxy = (new ProxyResponse(
+        return (new ProxyResponse(
             $parsed['target'],
             $this->request->getNowAddress(),
             $parsed['prefix']
         ))
             ->setTimeout(30)
+            ->setResponseInjector(function (string $body, array $headers, string $path) use ($debug): string {
+                return $this->injectProxyChrome($body, $debug);
+            })
             ->setErrorHandler(function (\Throwable $e): void {
                 if (Context::instance()->isDebug()) {
                     ErrorHandler::appException($e);
@@ -40,42 +43,91 @@ class Proxy extends BaseController
                     echo 'Proxy failed: ' . $e->getMessage();
                 }
             });
-
-        if ($debug) {
-            $proxy->setResponseInjector(function (string $body, array $headers, string $path): string {
-                return $this->injectVConsole($body);
-            });
-        }
-
-        return $proxy;
     }
 
-    private function injectVConsole(string $body): string
+    private function injectProxyChrome(string $body, bool $debug): string
     {
-        if ($body === '') {
+        if ($body === '' || !$this->looksLikeHtml($body)) {
             return $body;
         }
 
+        $snippet = $this->backButtonHtml();
+        if ($debug) {
+            $snippet .= $this->debugToolkitHtml();
+        }
+
+        return $this->insertBeforeCloseBody($body, $snippet);
+    }
+
+    private function looksLikeHtml(string $body): bool
+    {
         $lower = strtolower($body);
-        if (!str_contains($lower, '<html')
-            && !str_contains($lower, '<!doctype')
-            && !str_contains($lower, '<body')) {
-            return $body;
-        }
+        return str_contains($lower, '<html')
+            || str_contains($lower, '<!doctype')
+            || str_contains($lower, '<body');
+    }
 
-        $snippet = <<<'HTML'
-<script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
-<script>window.addEventListener("DOMContentLoaded",function(){try{new VConsole()}catch(e){}});</script>
+    private function backButtonHtml(): string
+    {
+        return <<<'HTML'
+<a id="nova-proxy-back" href="/" title="返回 Proxy"
+   style="position:fixed;left:16px;bottom:16px;z-index:2147483646;display:inline-flex;align-items:center;gap:6px;padding:10px 14px;background:#111;color:#fff;border-radius:999px;font:600 13px/1.2 system-ui,-apple-system,sans-serif;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.28);opacity:.92">← 返回 Proxy</a>
 HTML;
+    }
 
+    /**
+     * 调试套件：Eruda 核心 + 官方插件全套。
+     * vConsole 内置面板能力已被 Eruda 覆盖，双开只会抢入口，不值得。
+     */
+    private function debugToolkitHtml(): string
+    {
+        return <<<'HTML'
+<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+<script src="https://cdn.jsdelivr.net/npm/eruda-features"></script>
+<script src="https://cdn.jsdelivr.net/npm/eruda-timing"></script>
+<script src="https://cdn.jsdelivr.net/npm/eruda-code"></script>
+<script src="https://cdn.jsdelivr.net/npm/eruda-benchmark"></script>
+<script src="https://cdn.jsdelivr.net/npm/eruda-geolocation"></script>
+<script src="https://cdn.jsdelivr.net/npm/eruda-orientation"></script>
+<script src="https://cdn.jsdelivr.net/npm/eruda-touches"></script>
+<script>
+(function () {
+  function boot() {
+    try {
+      if (!window.eruda) return;
+      eruda.init();
+      var plugins = [
+        window.erudaFeatures,
+        window.erudaTiming,
+        window.erudaCode,
+        window.erudaBenchmark,
+        window.erudaGeolocation,
+        window.erudaOrientation,
+        window.erudaTouches
+      ];
+      for (var i = 0; i < plugins.length; i++) {
+        if (plugins[i]) eruda.add(plugins[i]);
+      }
+    } catch (e) {}
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
+</script>
+HTML;
+    }
+
+    private function insertBeforeCloseBody(string $body, string $snippet): string
+    {
         if (preg_match('/<\/body>/i', $body)) {
-            return preg_replace('/<\/body>/i', $snippet . '</body>', $body, 1) ?? $body;
+            return preg_replace('/<\/body>/i', $snippet . '</body>', $body, 1) ?? ($body . $snippet);
         }
-
         if (preg_match('/<\/html>/i', $body)) {
-            return preg_replace('/<\/html>/i', $snippet . '</html>', $body, 1) ?? $body;
+            return preg_replace('/<\/html>/i', $snippet . '</html>', $body, 1) ?? ($body . $snippet);
         }
-
         return $body . $snippet;
     }
 }
