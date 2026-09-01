@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef61214b-9224-460e-adc3-e65da86818f2" name="更改" comment=":sparkles: (ui): 重构首页门户并引入 Web Components 交互组件&#10;&#10;- 废弃旧版 home.js 与模板，采用 Shadow DOM 自定义元素（URL 输入框、快速访问网格、设置面板）提升可维护性&#10;- 新增快速访问管理功能，支持从 localStorage 自动迁移至后端 API，并集成调试模式切换&#10;- 重构控制器与路由逻辑，统一处理登录状态校验、未登录跳转及视图渲染初始化&#10;- 更新布局模板支持自定义壁纸预览与持久化，优化顶部导航栏用户信息展示与响应式样式&#10;- 清理遗留的重定向路由，简化应用启动时的路由注册流程">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/webServers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
+    <list default="true" id="ef61214b-9224-460e-adc3-e65da86818f2" name="更改" comment=":zap: (proxy): 优化静态资源请求处理逻辑&#10;&#10;新增 isStaticResource 方法识别静态资源路径。&#10;在 init 阶段判断请求类型，静态资源直接调用父级控制器初始化，&#10;跳过自定义代理逻辑，减少请求开销并提升性能。">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nova.phar" beforeDir="false" afterPath="$PROJECT_DIR$/nova.phar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/example.config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nova/plugin/proxy" beforeDir="false" afterPath="$PROJECT_DIR$/src/nova/plugin/proxy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nova/plugin/proxy/ContentRewriter.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/nova/plugin/proxy/ContentRewriter.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +126,7 @@
       <workItem from="1776589778015" duration="12323000" />
       <workItem from="1776860612767" duration="1075000" />
       <workItem from="1777100800912" duration="426000" />
-      <workItem from="1788228261813" duration="8573000" />
+      <workItem from="1788228261813" duration="10223000" />
     </task>
     <task id="LOCAL-00001" summary=":recycle: (proxy): 重构代理模块，移除ProxyType类并引入新的代理配置管理方式&#10;&#10;重构了代理模块，删除了`ProxyType`类，将代理配置从`config.php`中移出到独立的`proxyConfig.php`文件中。新增了`AListProxy`类，并修改了`ClashProxy`和`ProxyAbstract`类，使其不再依赖`ProxyType`。同时，`Application`类现在从`proxyConfig.php`加载代理配置，并动态实例化代理类。这些改动提高了代码的可维护性和扩展性。">
       <option name="closed" value="true" />
@@ -362,7 +360,47 @@
       <option name="project" value="LOCAL" />
       <updated>1788238613529</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary=":wrench: (config): 清理示例配置敏感信息并优化语法&#10;&#10;- 将旧版 array() 语法迁移至短数组 [] 语法，提升代码可读性。&#10;- 移除示例配置中的数据库主机、账号及密码等敏感凭据。&#10;- 更新 .gitignore 排除实际配置文件，防止隐私泄露。">
+      <option name="closed" value="true" />
+      <created>1788238965336</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1788238965336</updated>
+    </task>
+    <task id="LOCAL-00031" summary=":fire: (core): 移除废弃的前端存储逻辑与插件子模块&#10;&#10;删除了本地存储管理器的实现代码，清理前端冗余逻辑。&#10;同步更新 .gitmodules，移除 workerman 和 ip 两个外部插件子模块，优化项目依赖结构。">
+      <option name="closed" value="true" />
+      <created>1788239227648</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1788239227648</updated>
+    </task>
+    <task id="LOCAL-00032" summary=":bug: (proxy): 修复路径匹配与模板变量注入问题&#10;&#10;- 补充对 // 开头路径的拦截逻辑，防止协议相对 URL 路由异常&#10;- 移除 hook.js 中 TARGET_ORIGINS 的多余引号，避免模板替换时语法错误">
+      <option name="closed" value="true" />
+      <created>1788239250370</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1788239250370</updated>
+    </task>
+    <task id="LOCAL-00033" summary=":bug: (proxy): 修复路径匹配与模板变量注入问题&#10;&#10;- 补充对 // 开头路径的拦截逻辑，防止协议相对 URL 路由异常&#10;- 移除 hook.js 中 TARGET_ORIGINS 的多余引号，避免模板替换时语法错误">
+      <option name="closed" value="true" />
+      <created>1788239254702</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1788239254702</updated>
+    </task>
+    <task id="LOCAL-00034" summary=":zap: (proxy): 优化静态资源请求处理逻辑&#10;&#10;新增 isStaticResource 方法识别静态资源路径。&#10;在 init 阶段判断请求类型，静态资源直接调用父级控制器初始化，&#10;跳过自定义代理逻辑，减少请求开销并提升性能。">
+      <option name="closed" value="true" />
+      <created>1788240261714</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1788240261714</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -405,9 +443,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value=":recycle: (proxy): 重构代理模块，移除ProxyType类并引入新的代理配置管理方式&#10;&#10;重构了代理模块，删除了`ProxyType`类，将代理配置从`config.php`中移出到独立的`proxyConfig.php`文件中。新增了`AListProxy`类，并修改了`ClashProxy`和`ProxyAbstract`类，使其不再依赖`ProxyType`。同时，`Application`类现在从`proxyConfig.php`加载代理配置，并动态实例化代理类。这些改动提高了代码的可维护性和扩展性。" />
-    <MESSAGE value=":recycle: refactor(proxy): 重构代理模块，优化配置管理&#10;&#10;重构了代理模块，移除了 `ProxyType` 类，并将代理配置从&#10;`config.php` 中移至独立的 `proxyConfig.php` 文件中。&#10;同时，新增了 `AListProxy` 类，并修改了相关类以提高&#10;代码的可维护性和扩展性。" />
-    <MESSAGE value=":sparkles: feat(core): 添加实例管理类" />
     <MESSAGE value=":goal_net: catch AppExitException in response handling&#10;增加对 AppExitException 的捕获，优化响应处理逻辑。" />
     <MESSAGE value=":sparkles: feat(proxy): 添加内容重写和请求转发功能&#10;&#10;实现内容重写器和请求构建器，支持重写 HTML/CSS 中的外部链接，&#10;并通过代理转发 HTTP 请求和响应。包括 URL 重写、响应处理和&#10;流式传输功能，提升代理模块的灵活性和可扩展性。" />
     <MESSAGE value=":sparkles: feat(proxy): 添加代理配置管理功能&#10;&#10;实现了代理配置的增删改查功能，支持动态加载插件选项。&#10;新增了相关 API 接口，优化了代理模块的可维护性和扩展性。" />
@@ -429,7 +464,11 @@
     <MESSAGE value=":recycle: (proxy): 重构 URL 重写与主机匹配逻辑&#10;&#10;- 新增 meta refresh 跳转链接的自动改写&#10;- 升级 hook.js：支持多目标域名，拦截 location 及 window.open&#10;- 修复 gzip 解码崩溃问题，增加文件头魔数校验&#10;- 优化域名匹配：忽略大小写并自动剥离 www 前缀" />
     <MESSAGE value=":sparkles: 添加快速访问功能&#10;&#10;后端新增 QuickLink 控制器、DAO 及模型，提供用户专属链接的增删查改接口，内置 URL 规范化与唯一性校验。&#10;前端重构首页界面，引入网格化卡片布局展示快速链接，支持弹窗添加、点击删除及 Favicon 自动获取。&#10;增加本地数据迁移逻辑，自动将旧版 localStorage 缓存同步至数据库，无缝升级用户数据。&#10;注册相关路由以暴露新的 API 端点。" />
     <MESSAGE value=":sparkles: (ui): 重构首页门户并引入 Web Components 交互组件&#10;&#10;- 废弃旧版 home.js 与模板，采用 Shadow DOM 自定义元素（URL 输入框、快速访问网格、设置面板）提升可维护性&#10;- 新增快速访问管理功能，支持从 localStorage 自动迁移至后端 API，并集成调试模式切换&#10;- 重构控制器与路由逻辑，统一处理登录状态校验、未登录跳转及视图渲染初始化&#10;- 更新布局模板支持自定义壁纸预览与持久化，优化顶部导航栏用户信息展示与响应式样式&#10;- 清理遗留的重定向路由，简化应用启动时的路由注册流程" />
-    <option name="LAST_COMMIT_MESSAGE" value=":sparkles: (ui): 重构首页门户并引入 Web Components 交互组件&#10;&#10;- 废弃旧版 home.js 与模板，采用 Shadow DOM 自定义元素（URL 输入框、快速访问网格、设置面板）提升可维护性&#10;- 新增快速访问管理功能，支持从 localStorage 自动迁移至后端 API，并集成调试模式切换&#10;- 重构控制器与路由逻辑，统一处理登录状态校验、未登录跳转及视图渲染初始化&#10;- 更新布局模板支持自定义壁纸预览与持久化，优化顶部导航栏用户信息展示与响应式样式&#10;- 清理遗留的重定向路由，简化应用启动时的路由注册流程" />
+    <MESSAGE value=":wrench: (config): 清理示例配置敏感信息并优化语法&#10;&#10;- 将旧版 array() 语法迁移至短数组 [] 语法，提升代码可读性。&#10;- 移除示例配置中的数据库主机、账号及密码等敏感凭据。&#10;- 更新 .gitignore 排除实际配置文件，防止隐私泄露。" />
+    <MESSAGE value=":fire: (core): 移除废弃的前端存储逻辑与插件子模块&#10;&#10;删除了本地存储管理器的实现代码，清理前端冗余逻辑。&#10;同步更新 .gitmodules，移除 workerman 和 ip 两个外部插件子模块，优化项目依赖结构。" />
+    <MESSAGE value=":bug: (proxy): 修复路径匹配与模板变量注入问题&#10;&#10;- 补充对 // 开头路径的拦截逻辑，防止协议相对 URL 路由异常&#10;- 移除 hook.js 中 TARGET_ORIGINS 的多余引号，避免模板替换时语法错误" />
+    <MESSAGE value=":zap: (proxy): 优化静态资源请求处理逻辑&#10;&#10;新增 isStaticResource 方法识别静态资源路径。&#10;在 init 阶段判断请求类型，静态资源直接调用父级控制器初始化，&#10;跳过自定义代理逻辑，减少请求开销并提升性能。" />
+    <option name="LAST_COMMIT_MESSAGE" value=":zap: (proxy): 优化静态资源请求处理逻辑&#10;&#10;新增 isStaticResource 方法识别静态资源路径。&#10;在 init 阶段判断请求类型，静态资源直接调用父级控制器初始化，&#10;跳过自定义代理逻辑，减少请求开销并提升性能。" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
