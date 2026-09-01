@@ -1,6 +1,4 @@
 <script src="/static/bundle?file=
-framework/libs/vhcheck.min.js,
-framework/libs/mdui.global.min.js,
 framework/bootloader.js,
 framework/utils/Loading.js,
 framework/utils/Logger.js,
@@ -18,6 +16,3 @@ framework/pjax/nprogress.js,
 framework/pjax/PjaxUtils.js,
 framework/layout.js,
 &type=js&v={$__v}"></script>
-<script>
-document.querySelector("#hiddenBody").remove();
-</script>

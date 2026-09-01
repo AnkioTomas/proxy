@@ -12,11 +12,9 @@ declare(strict_types=1);
 
 namespace app;
 
-use app\plugins\PluginRegistry;
 use nova\framework\App;
-
+use nova\framework\event\EventManager;
 use nova\framework\route\Route;
-use nova\framework\route\RouteObject;
 use function nova\framework\route;
 
 class Application extends App
@@ -24,27 +22,25 @@ class Application extends App
 
     public function onFrameworkStart(): void
     {
-        $proxyRoute = route("index","proxy","index");
-        $proxyRoute2 = route("index","proxy","indexPath");
+        $adminRoute = ['index', 'main'];
+        EventManager::trigger('admin.router', $adminRoute);
+
+        $goRoute = route('index', 'proxy', 'indexPath');
+        $legacyRedirect = route('index', 'main', 'legacyRedirect');
+
         Route::getInstance()
-            ->getOrPost('/proxy/route_check', route("index","route","check"))
-            ->get('/proxy/api/{action}', route("index", "api", "{action}"))
-            ->post('/proxy/api/{action}', route("index", "api", "{action}"))
-            ->get('/proxy/{action}', route("index","main","{action}"))
-            ->post('/proxy/{action}', route("index","api","{action}"))
-            ->getOrPost('/', $proxyRoute)
-            ->put('/', $proxyRoute)
-            ->patch('/', $proxyRoute)
-            ->delete('/', $proxyRoute)
-            ->options('/', $proxyRoute)
-            ->getOrPost('/{path}', $proxyRoute2)
-            ->put('/{path}', $proxyRoute2)
-            ->patch('/{path}', $proxyRoute2)
-            ->delete('/{path}', $proxyRoute2)
-            ->options('/{path}', $proxyRoute2);
+            ->get('/', route('index', 'main', 'home'))
+            ->get('/proxy/manage', $legacyRedirect)
+            ->get('/proxy/account', $legacyRedirect)
+            ->get('/proxy/sso', $legacyRedirect)
+            ->getOrPost('/go/{path}', $goRoute)
+            ->put('/go/{path}', $goRoute)
+            ->patch('/go/{path}', $goRoute)
+            ->delete('/go/{path}', $goRoute)
+            ->options('/go/{path}', $goRoute);
     }
 
 
-    public const string SYSTEM_NAME =  "Nova Proxy";
+    public const string SYSTEM_NAME = 'Nova Proxy';
 
 }

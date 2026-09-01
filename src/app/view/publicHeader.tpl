@@ -1,8 +1,3 @@
-<style id="hiddenBody">
-    body{
-        display: none!important;
-    }
-</style>
 <!-- 预连接到 Google Fonts,减少 DNS 查询延迟 -->
 <link rel="preconnect" href="https://fonts.loli.net">
 <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
@@ -23,3 +18,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicon-16x16.png?v={$__v}"/>
 <link rel="icon" type="image/ico" href="/static/icons/favicon.ico?v={$__v}"/>
 
+<script src="/static/bundle?file=
+framework/libs/vhcheck.min.js,
+framework/libs/mdui.global.min.js
+&type=js&v={$__v}"></script>
