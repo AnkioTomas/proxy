@@ -26,7 +26,7 @@ final class GoTarget
             $path = '/';
         }
 
-        if ($host === '' || !self::isValidHost($host)) {
+        if ($host === '' || !ProxyUrl::isValidHost($host)) {
             return null;
         }
 
@@ -38,6 +38,10 @@ final class GoTarget
         $prefix = '/go/' . $scheme . '/' . $host;
         $target = $scheme . '://' . $host . $path . $query;
 
+        if (ProxyUrl::normalize($target) === null) {
+            return null;
+        }
+
         return [
             'scheme' => $scheme,
             'host' => $host,
@@ -46,18 +50,5 @@ final class GoTarget
             'prefix' => $prefix,
             'target' => $target,
         ];
-    }
-
-    public static function isValidHost(string $host): bool
-    {
-        $hostOnly = explode(':', $host, 2)[0];
-        if ($hostOnly === 'localhost') {
-            return true;
-        }
-        if (filter_var($hostOnly, FILTER_VALIDATE_IP)) {
-            return true;
-        }
-
-        return filter_var($hostOnly, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME) !== false;
     }
 }

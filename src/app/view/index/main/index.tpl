@@ -14,8 +14,12 @@
 
 <div id="container" class="container p-3">
     <div class="max-w-lg mx-auto">
-        <div id="homepage-hero" style="padding:8px 0;margin-top:15vh;">
-            <div class="mx-auto w-full max-w-sm px-2" style="box-sizing:border-box;">
+        <div id="homepage-hero" style="padding:8px 0;margin-top:12vh;">
+            <div class="mx-auto w-full max-w-sm px-2 text-center" style="box-sizing:border-box;">
+                <a href="/" class="d-inline-flex flex-col items-center gap-2 mb-4" style="text-decoration:none;color:#fff;">
+                    <img src="/static/icons/android-chrome-192x192.png?v={$__v}" alt="{$title}" width="80" height="80" style="border-radius:20px;box-shadow:0 8px 24px rgba(0,0,0,.25);">
+                    <span style="font-size:1.35rem;font-weight:700;letter-spacing:.02em;text-shadow:0 1px 8px rgba(0,0,0,.35);">{$title}</span>
+                </a>
                 <proxy-url-bar id="proxy-url-bar"></proxy-url-bar>
             </div>
         </div>

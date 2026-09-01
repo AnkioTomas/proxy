@@ -40,12 +40,19 @@ class ProxyUrlBar extends HTMLElement {
                     background: transparent !important;
                 }
                 #debug { flex-shrink: 0; }
+                .brand-icon {
+                    width: 28px;
+                    height: 28px;
+                    border-radius: 8px;
+                    flex-shrink: 0;
+                    object-fit: cover;
+                }
             </style>
             <mdui-card class="bar" variant="filled">
                 <div class="bar-inner">
-                    <mdui-icon name="travel_explore" style="font-size:28px;opacity:0.85;flex-shrink:0"></mdui-icon>
+                    <img class="brand-icon" src="/static/icons/favicon-32x32.png" alt="" width="28" height="28">
                     <div class="input-wrap">
-                        <mdui-text-field id="input" variant="outlined" placeholder="https://example.com/path" clearable></mdui-text-field>
+                        <mdui-text-field id="input" variant="outlined" type="url" inputmode="url" placeholder="https://example.com/path" clearable></mdui-text-field>
                     </div>
                     <mdui-button-icon id="debug" icon="bug_report" title="调试"></mdui-button-icon>
                     <mdui-button id="go" variant="filled" end-icon="arrow_forward">Go</mdui-button>

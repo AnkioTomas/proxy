@@ -11,7 +11,6 @@ window.pageOnLoad = function () {
 
     const WALLPAPER = 'https://api.ankio.net/bing';
 
-    const QUICK_LINKS_KEY = 'proxy_quick_links';
     const API_LIST = '/api/quicklink/list';
     const API_SAVE = '/api/quicklink/save';
     const API_REMOVE = '/api/quicklink/remove';
@@ -42,9 +41,9 @@ window.pageOnLoad = function () {
         return false;
     }
 
-    function buildGoPath(raw) {
+    function parseProxyUrl(raw) {
         let value = String(raw || '').trim();
-        if (!value) {
+        if (!value || /\s/.test(value)) {
             return null;
         }
         if (!/^https?:\/\//i.test(value)) {
@@ -55,31 +54,56 @@ window.pageOnLoad = function () {
             if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:' || !parsed.hostname) {
                 return null;
             }
-            const scheme = parsed.protocol.replace(':', '');
-            return '/go/' + scheme + '/' + parsed.host + (parsed.pathname || '/') + (parsed.search || '');
+            if (parsed.username || parsed.password) {
+                return null;
+            }
+            if (!isValidProxyHost(parsed.hostname)) {
+                return null;
+            }
+            if (parsed.port !== '' && (+parsed.port < 1 || +parsed.port > 65535)) {
+                return null;
+            }
+            parsed.hash = '';
+            return parsed;
         } catch (e) {
             return null;
         }
     }
 
+    function isValidProxyHost(hostname) {
+        if (hostname === 'localhost') {
+            return true;
+        }
+        if (/^\d{1,3}(\.\d{1,3}){3}$/.test(hostname)) {
+            return hostname.split('.').every(function (part) {
+                const n = Number(part);
+                return n >= 0 && n <= 255;
+            });
+        }
+        if (hostname.includes(':')) {
+            return true;
+        }
+        if (hostname.length > 253 || !/^[a-z0-9.-]+$/i.test(hostname)) {
+            return false;
+        }
+        if (hostname.startsWith('.') || hostname.endsWith('.') || hostname.includes('..')) {
+            return false;
+        }
+        return true;
+    }
+
+    function buildGoPath(raw) {
+        const parsed = parseProxyUrl(raw);
+        if (!parsed) {
+            return null;
+        }
+        const scheme = parsed.protocol.replace(':', '');
+        return '/go/' + scheme + '/' + parsed.host + (parsed.pathname || '/') + (parsed.search || '');
+    }
+
     function normalizeUrl(raw) {
-        let value = String(raw || '').trim();
-        if (!value) {
-            return null;
-        }
-        if (!/^https?:\/\//i.test(value)) {
-            value = 'https://' + value;
-        }
-        try {
-            const parsed = new URL(value);
-            if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:' || !parsed.hostname) {
-                return null;
-            }
-            parsed.hash = '';
-            return parsed.href;
-        } catch (e) {
-            return null;
-        }
+        const parsed = parseProxyUrl(raw);
+        return parsed ? parsed.href : null;
     }
 
     function defaultTitle(url) {
@@ -88,37 +112,6 @@ window.pageOnLoad = function () {
         } catch (e) {
             return url;
         }
-    }
-
-    function readLocalQuickLinks() {
-        try {
-            const raw = localStorage.getItem(QUICK_LINKS_KEY);
-            const list = raw ? JSON.parse(raw) : [];
-            return Array.isArray(list) ? list.filter(function (item) {
-                return item && item.url;
-            }) : [];
-        } catch (e) {
-            return [];
-        }
-    }
-
-    function migrateLocalQuickLinks(done) {
-        const localList = readLocalQuickLinks();
-        if (!localList.length) {
-            done();
-            return;
-        }
-        let pending = localList.length;
-        function finishOne() {
-            pending -= 1;
-            if (pending <= 0) {
-                localStorage.removeItem(QUICK_LINKS_KEY);
-                done();
-            }
-        }
-        localList.forEach(function (item) {
-            $.request.postForm(API_SAVE, { url: item.url, title: item.title || '' }, finishOne, finishOne);
-        });
     }
 
     function loadQuickLinks() {
@@ -140,10 +133,6 @@ window.pageOnLoad = function () {
                     title: row.title || defaultTitle(row.url)
                 };
             }) : [];
-            if (!quickLinks.length && readLocalQuickLinks().length) {
-                migrateLocalQuickLinks(loadQuickLinks);
-                return;
-            }
             quickGrid.setItems(quickLinks);
         }, function () {
             quickLinks = [];

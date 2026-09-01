@@ -23,6 +23,25 @@
         .top-bar:not([scrolling]) .layout-header-user-info [slot="trigger"] {
             color: rgb(var(--bar-icon-color));
         }
+        .top-bar:not([scrolling]) .layout-brand {
+            color: rgb(var(--bar-icon-color));
+        }
+        .layout-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: 0.75rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            color: rgb(var(--mdui-color-on-surface));
+        }
+        .layout-brand img {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
     </style>
     <style id="style"></style>
     <script>
@@ -34,6 +53,10 @@
 
 <mdui-layout class="scroll-line">
     <mdui-top-app-bar scroll-behavior="elevate" scroll-target=".layout-main" class="position-fixed top-bar">
+        <a href="/" class="layout-brand">
+            <img src="/static/icons/favicon-32x32.png?v={$__v}" alt="">
+            <span>{$title}</span>
+        </a>
         <div style="flex-grow: 1"></div>
         <div class="layout-header-right d-flex items-center gap-2">
             <div class="top-bar-utils d-flex items-center gap-2">

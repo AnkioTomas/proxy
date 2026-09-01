@@ -6,6 +6,7 @@ namespace app\controller\index;
 
 use app\db\Dao\QuickLinkDao;
 use app\db\Model\QuickLinkModel;
+use app\service\ProxyUrl;
 use nova\framework\http\Response;
 
 class Quicklink extends BaseController
@@ -28,7 +29,7 @@ class Quicklink extends BaseController
     public function save(): Response
     {
         $id = (int)$this->request->post('id', 0);
-        $url = $this->normalizeUrl((string)$this->request->post('url', ''));
+        $url = ProxyUrl::normalize((string)$this->request->post('url', ''));
         if ($url === null) {
             return Response::asJson(['code' => 400, 'msg' => '请输入合法的 http(s) URL'], 400);
         }
@@ -87,44 +88,6 @@ class Quicklink extends BaseController
         $dao->delete()->where(['id' => $id, 'user_id' => $this->currentUser->id])->commit();
 
         return Response::asJson(['code' => 200, 'msg' => '删除成功']);
-    }
-
-    private function normalizeUrl(string $raw): ?string
-    {
-        $value = trim($raw);
-        if ($value === '') {
-            return null;
-        }
-
-        if (!preg_match('/^https?:\/\//i', $value)) {
-            $value = 'https://' . $value;
-        }
-
-        $parts = parse_url($value);
-        if ($parts === false || empty($parts['host'])) {
-            return null;
-        }
-
-        $scheme = strtolower((string)($parts['scheme'] ?? ''));
-        if ($scheme !== 'http' && $scheme !== 'https') {
-            return null;
-        }
-
-        $path = $parts['path'] ?? '/';
-        if ($path === '') {
-            $path = '/';
-        }
-
-        $url = $scheme . '://' . $parts['host'];
-        if (!empty($parts['port'])) {
-            $url .= ':' . $parts['port'];
-        }
-        $url .= $path;
-        if (!empty($parts['query'])) {
-            $url .= '?' . $parts['query'];
-        }
-
-        return $url;
     }
 
     private function defaultTitle(string $url): string

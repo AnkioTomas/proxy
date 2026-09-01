@@ -14,7 +14,12 @@
 <mdui-layout class="">
     <mdui-top-app-bar scroll-behavior="elevate" scroll-target=".layout-main" class="position-fixed">
         <mdui-button-icon icon="menu" id="navigation-drawer-switch"></mdui-button-icon>
-        <mdui-top-app-bar-title>{$title}</mdui-top-app-bar-title>
+        <mdui-top-app-bar-title>
+            <a href="/" style="display:inline-flex;align-items:center;gap:0.5rem;text-decoration:none;color:inherit;">
+                <img src="/static/icons/favicon-32x32.png?v={$__v}" alt="" width="24" height="24" style="border-radius:6px;">
+                <span>{$title}</span>
+            </a>
+        </mdui-top-app-bar-title>
         <div style="flex-grow: 1"></div>
         <div class="layout-header-right d-flex items-center gap-2">
             <div class="top-bar-utils d-flex items-center gap-2">

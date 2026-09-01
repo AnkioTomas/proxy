@@ -1,6 +1,6 @@
 {
-    "name": "nova\/proxy-birdge",
-    "description": "A Nova project",
+    "name": "duckgo",
+    "description": "鸭鸭Go — 基于 Nova 的 HTTP/HTTPS 路径代理",
     "version": "1.0.0",
     "type": "project",
     "license": "MIT",

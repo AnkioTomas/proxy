@@ -43,6 +43,6 @@ class Application extends App
     }
 
 
-    public const string SYSTEM_NAME = 'Nova Proxy';
+    public const string SYSTEM_NAME = '鸭鸭Go';
 
 }

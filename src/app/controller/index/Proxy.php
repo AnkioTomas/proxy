@@ -134,8 +134,8 @@ class Proxy extends BaseController
     private function backButtonHtml(): string
     {
         return <<<'HTML'
-<a id="nova-proxy-back" href="/" title="返回 Proxy"
-   style="position:fixed;left:16px;bottom:16px;z-index:2147483646;display:inline-flex;align-items:center;gap:6px;padding:10px 14px;background:#111;color:#fff;border-radius:999px;font:600 13px/1.2 system-ui,-apple-system,sans-serif;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.28);opacity:.92">← 返回 Proxy</a>
+<a id="duckgo-back" href="/" title="返回鸭鸭Go"
+   style="position:fixed;left:16px;bottom:16px;z-index:2147483646;display:inline-flex;align-items:center;gap:6px;padding:10px 14px;background:#111;color:#fff;border-radius:999px;font:600 13px/1.2 system-ui,-apple-system,sans-serif;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.28);opacity:.92">← 返回鸭鸭Go</a>
 HTML;
     }
 
