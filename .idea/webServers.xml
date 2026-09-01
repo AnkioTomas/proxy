@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="358198bc-71ae-4058-918d-33dd0fbc1837" name="stfp">
-        <fileTransfer rootFolder="/opt/1panel/www/sites/proxy.ankio.icu/index" accessType="SFTP" host="192.168.100.200" port="22" sshConfigId="038b136b-658e-4b82-80cf-5358c545bffc" sshConfig="ankio@192.168.100.200:22 password">
+        <fileTransfer rootFolder="/opt/1panel/www/sites/proxy.ankio.icu/index" accessType="SFTP" host="192.168.100.200" port="22" sshConfigId="038b136b-658e-4b82-80cf-5358c545bffc" sshConfig="root@192.168.100.200:22 key" keyPair="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

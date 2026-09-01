@@ -4,25 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef61214b-9224-460e-adc3-e65da86818f2" name="更改" comment=":sparkles: feat(proxy): 添加代理配置管理功能&#10;&#10;实现了代理配置的增删改查功能，支持动态加载插件选项。&#10;新增了相关 API 接口，优化了代理模块的可维护性和扩展性。">
+    <list default="true" id="ef61214b-9224-460e-adc3-e65da86818f2" name="更改" comment=":sparkles: (ui): 重构首页门户并引入 Web Components 交互组件&#10;&#10;- 废弃旧版 home.js 与模板，采用 Shadow DOM 自定义元素（URL 输入框、快速访问网格、设置面板）提升可维护性&#10;- 新增快速访问管理功能，支持从 localStorage 自动迁移至后端 API，并集成调试模式切换&#10;- 重构控制器与路由逻辑，统一处理登录状态校验、未登录跳转及视图渲染初始化&#10;- 更新布局模板支持自定义壁纸预览与持久化，优化顶部导航栏用户信息展示与响应式样式&#10;- 清理遗留的重定向路由，简化应用启动时的路由注册流程">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/webServers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/controller/index/BaseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/controller/index/BaseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/controller/index/Proxy.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/controller/index/Proxy.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/plugins/Panel.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/plugins/Panel/Panel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/plugins/Panel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/plugins/Panel/Panel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/plugins/PluginRegistry.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/service/ProxyConfigService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/service/ProxyConfigService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/nova/plugin/proxy" beforeDir="false" afterPath="$PROJECT_DIR$/src/nova/plugin/proxy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/proxy.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/proxy.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nova.phar" beforeDir="false" afterPath="$PROJECT_DIR$/nova.phar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/example.config.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+      <option value="repository" />
+    </option>
+  </component>
   <component name="ComposerSettings" notifyAboutMissingVendor="false" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
-    <execution />
+    <execution>
+      <execution />
+    </execution>
   </component>
   <component name="CopilotPersistence">
     <persistenceIdMap>
@@ -31,8 +35,8 @@
   </component>
   <component name="CopilotUserSelectedModel">
     <selectedModels>
-      <entry key="chat-panel" value="Claude Opus 4.6" />
-      <entry key="agent-panel" value="Claude Opus 4.6" />
+      <entry key="chat-panel" value="GPT-5 mini" />
+      <entry key="agent-panel" value="GPT-5 mini" />
     </selectedModels>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -47,7 +51,7 @@
     <option name="RESET_MODE" value="HARD" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="/usr/local/Cellar/php@8.3/8.3.25/bin/php" />
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 8.3" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -58,6 +62,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
@@ -69,7 +74,7 @@
     "WebServerToolWindowPanel.toolwindow.show.size": "false",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/ankio/Documents/SourceCode/PHP/proxy/src/nova/plugin",
+    "last_opened_file_path": "/Users/ankio/Documents/SourceCode/PHP/proxy/src",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -81,10 +86,20 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/src/app/static/icons" />
+      <recent name="$PROJECT_DIR$/src/app/plugins" />
       <recent name="$PROJECT_DIR$/src/nova/plugin" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/src/app/view" />
     </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-PS-262.9437.196" />
+        <option value="bundled-php-predefined-a98d8de5180a-9522f28f0b20-com.jetbrains.php.sharedIndexes-PS-262.9437.196" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
@@ -106,7 +121,14 @@
       <workItem from="1776319260702" duration="81000" />
       <workItem from="1776319492410" duration="3124000" />
       <workItem from="1776324737481" duration="2561000" />
-      <workItem from="1776332474761" duration="7224000" />
+      <workItem from="1776332474761" duration="20524000" />
+      <workItem from="1776496340599" duration="9458000" />
+      <workItem from="1776571007849" duration="1084000" />
+      <workItem from="1776572397912" duration="6110000" />
+      <workItem from="1776589778015" duration="12323000" />
+      <workItem from="1776860612767" duration="1075000" />
+      <workItem from="1777100800912" duration="426000" />
+      <workItem from="1788228261813" duration="8573000" />
     </task>
     <task id="LOCAL-00001" summary=":recycle: (proxy): 重构代理模块，移除ProxyType类并引入新的代理配置管理方式&#10;&#10;重构了代理模块，删除了`ProxyType`类，将代理配置从`config.php`中移出到独立的`proxyConfig.php`文件中。新增了`AListProxy`类，并修改了`ClashProxy`和`ProxyAbstract`类，使其不再依赖`ProxyType`。同时，`Application`类现在从`proxyConfig.php`加载代理配置，并动态实例化代理类。这些改动提高了代码的可维护性和扩展性。">
       <option name="closed" value="true" />
@@ -156,7 +178,191 @@
       <option name="project" value="LOCAL" />
       <updated>1776341900936</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary=":sparkles: feat(proxy): 添加代理配置管理功能&#10;&#10;实现了代理配置的增删改查功能，支持动态加载插件选项。&#10;新增了相关 API 接口，优化了代理模块的可维护性和扩展性。">
+      <option name="closed" value="true" />
+      <created>1776342723182</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1776342723182</updated>
+    </task>
+    <task id="LOCAL-00008" summary=":sparkles: feat(proxy): 更新请求头构建方法，支持代理前缀">
+      <option name="closed" value="true" />
+      <created>1776386628159</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1776386628159</updated>
+    </task>
+    <task id="LOCAL-00009" summary=":sparkles: feat(plugin): 添加 AList 插件以支持自动登录">
+      <option name="closed" value="true" />
+      <created>1776386645701</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1776386645701</updated>
+    </task>
+    <task id="LOCAL-00010" summary=":sparkles: feat(content-rewriter): 增强链接重写逻辑，支持多种 URL 格式&#10;&#10;更新 ContentRewriter 类，改进了对目标站点 URL 的处理逻辑。&#10;新增对同源完整 URL 和协议相对 URL 的支持，优化了相对路径解析。&#10;重构构造函数，添加代理服务器的 origin 处理，确保更灵活的 URL 重写。">
+      <option name="closed" value="true" />
+      <created>1776389449319</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1776389449319</updated>
+    </task>
+    <task id="LOCAL-00011" summary=":sparkles: feat(streaming): 优化流式传输处理逻辑&#10;增加了流式传输的缓冲机制，提升大文件传输性能。&#10;同时设置了 socket 超时，确保连接稳定性。">
+      <option name="closed" value="true" />
+      <created>1776491457451</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1776491457451</updated>
+    </task>
+    <task id="LOCAL-00012" summary=":sparkles: feat(login): 添加登录功能支持与注入脚本&#10;引入新的登录路径和注入脚本功能，以支持用户自动登录。&#10;重构相关插件以增强登录体验和权限管理。">
+      <option name="closed" value="true" />
+      <created>1776494670428</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1776494670428</updated>
+    </task>
+    <task id="LOCAL-00013" summary=":sparkles: feat(http): 更新请求头构建方法以支持完整 URL">
+      <option name="closed" value="true" />
+      <created>1776570519343</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1776570519343</updated>
+    </task>
+    <task id="LOCAL-00014" summary=":sparkles: feat(proxy): 添加获取 WebSocket 目标的功能&#10;新增 getWsTarget 方法以支持根据请求 URI 动态构建目标 URL。&#10;同时，更新多个插件的 loginPath 方法以返回数组格式。">
+      <option name="closed" value="true" />
+      <created>1776570528699</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1776570528699</updated>
+    </task>
+    <task id="LOCAL-00015" summary=":sparkles: feat(proxy): 引入统一路由决策接口与 Nginx 分流支持&#10;&#10;新增 Route 路由决策控制器，支持 Nginx Lua 子请求获取 JSON 路由决策，&#10;实现 direct/websocket/php/reject 四种分流模式。重构 Proxy 注入逻辑，&#10;通过 X-Route-Rewrite 头区分登录注入路径。更新 nginx.conf，支持&#10;路由缓存、WebSocket 直连、静态资源直通等高性能分流，减少 PHP 压力。">
+      <option name="closed" value="true" />
+      <created>1776589767243</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1776589767243</updated>
+    </task>
+    <task id="LOCAL-00016" summary=":bug: fix(proxy): 修复目录与文件路径判断逻辑，提升相对路径兼容性&#10;&#10;优化 setCurrentPath 方法，增强对带尾部斜杠目录和特殊文件名&#10;（如 index.cgi/）的处理，避免因上游丢失斜杠导致的相对路径解析错误。">
+      <option name="closed" value="true" />
+      <created>1776596781086</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1776596781086</updated>
+    </task>
+    <task id="LOCAL-00017" summary=":sparkles: feat(proxy): 支持文件上传请求体重建与 &lt;base&gt; 跳过相对路径重写&#10;&#10;增强代理对 multipart/form-data 文件上传的兼容性，自动重建&#10;请求体以适配 PHP 已消费原始输入流的场景。优化 HTML/CSS&#10;内容重写逻辑，若检测到 &lt;base&gt; 标签则跳过相对路径重写，&#10;提升兼容性与准确性。增加详细日志，便于调试请求体转发流程。">
+      <option name="closed" value="true" />
+      <created>1776602870849</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1776602870849</updated>
+    </task>
+    <task id="LOCAL-00018" summary=":sparkles: feat(plugin): 新增多插件支持与插件注入机制优化&#10;&#10;引入 Adguard、Gitea、Napcat、Authorization 等插件，统一插件构造方法，&#10;优化登录信息注入与响应处理逻辑，提升插件扩展性与自动化能力。">
+      <option name="closed" value="true" />
+      <created>1776602881999</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1776602881999</updated>
+    </task>
+    <task id="LOCAL-00019" summary=":mute: 移除 HTML 属性重写中的调试日志&#10;&#10;优化日志输出，减少无用调试信息，提升代码整洁性。">
+      <option name="closed" value="true" />
+      <created>1776602895130</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1776602895130</updated>
+    </task>
+    <task id="LOCAL-00020" summary=":mute: 移除 HTML 属性重写中的调试日志&#10;&#10;优化日志输出，减少无用调试信息，提升代码整洁性。">
+      <option name="closed" value="true" />
+      <created>1776602900505</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1776602900505</updated>
+    </task>
+    <task id="LOCAL-00021" summary=":recycle: (proxy): 重构代理模块，移除插件系统并引入 /go/ 路由&#10;&#10;彻底移除基于 ProxyConfigService 和 BasePlugin 的旧版配置体系。&#10;新增 GoTarget 服务解析 /go/{scheme}/{host}/{path} 路径，统一由&#10;Proxy 控制器处理转发逻辑。简化 Main、Route 及 BaseController 的&#10;鉴权与视图渲染流程，前端同步迁移至轻量级 home 页面。优化路由注&#10;册逻辑，提升代码可维护性与执行效率。">
+      <option name="closed" value="true" />
+      <created>1788233575677</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1788233575677</updated>
+    </task>
+    <task id="LOCAL-00022" summary=":bug: (proxy): 修复代理响应重写导致的非 UTF-8 页面乱码问题&#10;&#10;新增 CharsetNormalizer 工具类，在文本内容重写前自动检测并统一转换为 UTF-8 编码。&#10;- 支持从 HTTP Header 和 HTML Meta 标签中解析原始字符集&#10;- 通过 mb_convert_encoding/iconv 安全转换，避免正则替换截断多字节字符（如 GBK）&#10;- 自动修正返回的 Content-Type 响应头及页面内 meta charset 声明&#10;- 仅对文本型内容（HTML/CSS/JSON/XML 等）执行解码与编码归一化操作">
+      <option name="closed" value="true" />
+      <created>1788234519779</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1788234519779</updated>
+    </task>
+    <task id="LOCAL-00023" summary=":sparkles: (proxy): 引入 Eruda 调试套件并优化 HTML 注入逻辑&#10;&#10;- 将 vConsole 替换为 Eruda 核心及全套官方插件，扩展调试面板能力。&#10;- 新增悬浮返回按钮，提升移动端代理页面的交互与导航体验。&#10;- 增强 HTML 检测与插入逻辑，兼容缺失闭合标签的非标准文档结构。&#10;- 调整 ProxyResponse 初始化流程，将响应注入器直接绑定至构造函数。">
+      <option name="closed" value="true" />
+      <created>1788234672842</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1788234672842</updated>
+    </task>
+    <task id="LOCAL-00024" summary=":sparkles: (proxy): 引入 Eruda 调试套件并优化 HTML 注入逻辑&#10;&#10;- 将 vConsole 替换为 Eruda 核心及全套官方插件，扩展调试面板能力。&#10;- 新增悬浮返回按钮，提升移动端代理页面的交互与导航体验。&#10;- 增强 HTML 检测与插入逻辑，兼容缺失闭合标签的非标准文档结构。&#10;- 调整 ProxyResponse 初始化流程，将响应注入器直接绑定至构造函数。">
+      <option name="closed" value="true" />
+      <created>1788234871071</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1788234871071</updated>
+    </task>
+    <task id="LOCAL-00025" summary=":sparkles: (proxy): 引入 Eruda 调试套件并优化 HTML 注入逻辑&#10;&#10;- 将 vConsole 替换为 Eruda 核心及全套官方插件，扩展调试面板能力。&#10;- 新增悬浮返回按钮，提升移动端代理页面的交互与导航体验。&#10;- 增强 HTML 检测与插入逻辑，兼容缺失闭合标签的非标准文档结构。&#10;- 调整 ProxyResponse 初始化流程，将响应注入器直接绑定至构造函数。">
+      <option name="closed" value="true" />
+      <created>1788234875752</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1788234875752</updated>
+    </task>
+    <task id="LOCAL-00026" summary=":recycle: (proxy): 重构 URL 重写与主机匹配逻辑&#10;&#10;- 新增 meta refresh 跳转链接的自动改写&#10;- 升级 hook.js：支持多目标域名，拦截 location 及 window.open&#10;- 修复 gzip 解码崩溃问题，增加文件头魔数校验&#10;- 优化域名匹配：忽略大小写并自动剥离 www 前缀">
+      <option name="closed" value="true" />
+      <created>1788236698151</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1788236698151</updated>
+    </task>
+    <task id="LOCAL-00027" summary=":sparkles: 添加快速访问功能&#10;&#10;后端新增 QuickLink 控制器、DAO 及模型，提供用户专属链接的增删查改接口，内置 URL 规范化与唯一性校验。&#10;前端重构首页界面，引入网格化卡片布局展示快速链接，支持弹窗添加、点击删除及 Favicon 自动获取。&#10;增加本地数据迁移逻辑，自动将旧版 localStorage 缓存同步至数据库，无缝升级用户数据。&#10;注册相关路由以暴露新的 API 端点。">
+      <option name="closed" value="true" />
+      <created>1788236860331</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1788236860331</updated>
+    </task>
+    <task id="LOCAL-00028" summary=":sparkles: 添加快速访问功能&#10;&#10;后端新增 QuickLink 控制器、DAO 及模型，提供用户专属链接的增删查改接口，内置 URL 规范化与唯一性校验。&#10;前端重构首页界面，引入网格化卡片布局展示快速链接，支持弹窗添加、点击删除及 Favicon 自动获取。&#10;增加本地数据迁移逻辑，自动将旧版 localStorage 缓存同步至数据库，无缝升级用户数据。&#10;注册相关路由以暴露新的 API 端点。">
+      <option name="closed" value="true" />
+      <created>1788236865037</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1788236865037</updated>
+    </task>
+    <task id="LOCAL-00029" summary=":sparkles: (ui): 重构首页门户并引入 Web Components 交互组件&#10;&#10;- 废弃旧版 home.js 与模板，采用 Shadow DOM 自定义元素（URL 输入框、快速访问网格、设置面板）提升可维护性&#10;- 新增快速访问管理功能，支持从 localStorage 自动迁移至后端 API，并集成调试模式切换&#10;- 重构控制器与路由逻辑，统一处理登录状态校验、未登录跳转及视图渲染初始化&#10;- 更新布局模板支持自定义壁纸预览与持久化，优化顶部导航栏用户信息展示与响应式样式&#10;- 清理遗留的重定向路由，简化应用启动时的路由注册流程">
+      <option name="closed" value="true" />
+      <created>1788238613529</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1788238613529</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -205,14 +411,32 @@
     <MESSAGE value=":goal_net: catch AppExitException in response handling&#10;增加对 AppExitException 的捕获，优化响应处理逻辑。" />
     <MESSAGE value=":sparkles: feat(proxy): 添加内容重写和请求转发功能&#10;&#10;实现内容重写器和请求构建器，支持重写 HTML/CSS 中的外部链接，&#10;并通过代理转发 HTTP 请求和响应。包括 URL 重写、响应处理和&#10;流式传输功能，提升代理模块的灵活性和可扩展性。" />
     <MESSAGE value=":sparkles: feat(proxy): 添加代理配置管理功能&#10;&#10;实现了代理配置的增删改查功能，支持动态加载插件选项。&#10;新增了相关 API 接口，优化了代理模块的可维护性和扩展性。" />
-    <option name="LAST_COMMIT_MESSAGE" value=":sparkles: feat(proxy): 添加代理配置管理功能&#10;&#10;实现了代理配置的增删改查功能，支持动态加载插件选项。&#10;新增了相关 API 接口，优化了代理模块的可维护性和扩展性。" />
+    <MESSAGE value=":sparkles: feat(proxy): 更新请求头构建方法，支持代理前缀" />
+    <MESSAGE value=":sparkles: feat(plugin): 添加 AList 插件以支持自动登录" />
+    <MESSAGE value=":sparkles: feat(content-rewriter): 增强链接重写逻辑，支持多种 URL 格式&#10;&#10;更新 ContentRewriter 类，改进了对目标站点 URL 的处理逻辑。&#10;新增对同源完整 URL 和协议相对 URL 的支持，优化了相对路径解析。&#10;重构构造函数，添加代理服务器的 origin 处理，确保更灵活的 URL 重写。" />
+    <MESSAGE value=":sparkles: feat(streaming): 优化流式传输处理逻辑&#10;增加了流式传输的缓冲机制，提升大文件传输性能。&#10;同时设置了 socket 超时，确保连接稳定性。" />
+    <MESSAGE value=":sparkles: feat(login): 添加登录功能支持与注入脚本&#10;引入新的登录路径和注入脚本功能，以支持用户自动登录。&#10;重构相关插件以增强登录体验和权限管理。" />
+    <MESSAGE value=":sparkles: feat(http): 更新请求头构建方法以支持完整 URL" />
+    <MESSAGE value=":sparkles: feat(proxy): 添加获取 WebSocket 目标的功能&#10;新增 getWsTarget 方法以支持根据请求 URI 动态构建目标 URL。&#10;同时，更新多个插件的 loginPath 方法以返回数组格式。" />
+    <MESSAGE value=":sparkles: feat(proxy): 引入统一路由决策接口与 Nginx 分流支持&#10;&#10;新增 Route 路由决策控制器，支持 Nginx Lua 子请求获取 JSON 路由决策，&#10;实现 direct/websocket/php/reject 四种分流模式。重构 Proxy 注入逻辑，&#10;通过 X-Route-Rewrite 头区分登录注入路径。更新 nginx.conf，支持&#10;路由缓存、WebSocket 直连、静态资源直通等高性能分流，减少 PHP 压力。" />
+    <MESSAGE value=":bug: fix(proxy): 修复目录与文件路径判断逻辑，提升相对路径兼容性&#10;&#10;优化 setCurrentPath 方法，增强对带尾部斜杠目录和特殊文件名&#10;（如 index.cgi/）的处理，避免因上游丢失斜杠导致的相对路径解析错误。" />
+    <MESSAGE value=":sparkles: feat(proxy): 支持文件上传请求体重建与 &lt;base&gt; 跳过相对路径重写&#10;&#10;增强代理对 multipart/form-data 文件上传的兼容性，自动重建&#10;请求体以适配 PHP 已消费原始输入流的场景。优化 HTML/CSS&#10;内容重写逻辑，若检测到 &lt;base&gt; 标签则跳过相对路径重写，&#10;提升兼容性与准确性。增加详细日志，便于调试请求体转发流程。" />
+    <MESSAGE value=":sparkles: feat(plugin): 新增多插件支持与插件注入机制优化&#10;&#10;引入 Adguard、Gitea、Napcat、Authorization 等插件，统一插件构造方法，&#10;优化登录信息注入与响应处理逻辑，提升插件扩展性与自动化能力。" />
+    <MESSAGE value=":mute: 移除 HTML 属性重写中的调试日志&#10;&#10;优化日志输出，减少无用调试信息，提升代码整洁性。" />
+    <MESSAGE value=":recycle: (proxy): 重构代理模块，移除插件系统并引入 /go/ 路由&#10;&#10;彻底移除基于 ProxyConfigService 和 BasePlugin 的旧版配置体系。&#10;新增 GoTarget 服务解析 /go/{scheme}/{host}/{path} 路径，统一由&#10;Proxy 控制器处理转发逻辑。简化 Main、Route 及 BaseController 的&#10;鉴权与视图渲染流程，前端同步迁移至轻量级 home 页面。优化路由注&#10;册逻辑，提升代码可维护性与执行效率。" />
+    <MESSAGE value=":bug: (proxy): 修复代理响应重写导致的非 UTF-8 页面乱码问题&#10;&#10;新增 CharsetNormalizer 工具类，在文本内容重写前自动检测并统一转换为 UTF-8 编码。&#10;- 支持从 HTTP Header 和 HTML Meta 标签中解析原始字符集&#10;- 通过 mb_convert_encoding/iconv 安全转换，避免正则替换截断多字节字符（如 GBK）&#10;- 自动修正返回的 Content-Type 响应头及页面内 meta charset 声明&#10;- 仅对文本型内容（HTML/CSS/JSON/XML 等）执行解码与编码归一化操作" />
+    <MESSAGE value=":sparkles: (proxy): 引入 Eruda 调试套件并优化 HTML 注入逻辑&#10;&#10;- 将 vConsole 替换为 Eruda 核心及全套官方插件，扩展调试面板能力。&#10;- 新增悬浮返回按钮，提升移动端代理页面的交互与导航体验。&#10;- 增强 HTML 检测与插入逻辑，兼容缺失闭合标签的非标准文档结构。&#10;- 调整 ProxyResponse 初始化流程，将响应注入器直接绑定至构造函数。" />
+    <MESSAGE value=":recycle: (proxy): 重构 URL 重写与主机匹配逻辑&#10;&#10;- 新增 meta refresh 跳转链接的自动改写&#10;- 升级 hook.js：支持多目标域名，拦截 location 及 window.open&#10;- 修复 gzip 解码崩溃问题，增加文件头魔数校验&#10;- 优化域名匹配：忽略大小写并自动剥离 www 前缀" />
+    <MESSAGE value=":sparkles: 添加快速访问功能&#10;&#10;后端新增 QuickLink 控制器、DAO 及模型，提供用户专属链接的增删查改接口，内置 URL 规范化与唯一性校验。&#10;前端重构首页界面，引入网格化卡片布局展示快速链接，支持弹窗添加、点击删除及 Favicon 自动获取。&#10;增加本地数据迁移逻辑，自动将旧版 localStorage 缓存同步至数据库，无缝升级用户数据。&#10;注册相关路由以暴露新的 API 端点。" />
+    <MESSAGE value=":sparkles: (ui): 重构首页门户并引入 Web Components 交互组件&#10;&#10;- 废弃旧版 home.js 与模板，采用 Shadow DOM 自定义元素（URL 输入框、快速访问网格、设置面板）提升可维护性&#10;- 新增快速访问管理功能，支持从 localStorage 自动迁移至后端 API，并集成调试模式切换&#10;- 重构控制器与路由逻辑，统一处理登录状态校验、未登录跳转及视图渲染初始化&#10;- 更新布局模板支持自定义壁纸预览与持久化，优化顶部导航栏用户信息展示与响应式样式&#10;- 清理遗留的重定向路由，简化应用启动时的路由注册流程" />
+    <option name="LAST_COMMIT_MESSAGE" value=":sparkles: (ui): 重构首页门户并引入 Web Components 交互组件&#10;&#10;- 废弃旧版 home.js 与模板，采用 Shadow DOM 自定义元素（URL 输入框、快速访问网格、设置面板）提升可维护性&#10;- 新增快速访问管理功能，支持从 localStorage 自动迁移至后端 API，并集成调试模式切换&#10;- 重构控制器与路由逻辑，统一处理登录状态校验、未登录跳转及视图渲染初始化&#10;- 更新布局模板支持自定义壁纸预览与持久化，优化顶部导航栏用户信息展示与响应式样式&#10;- 清理遗留的重定向路由，简化应用启动时的路由注册流程" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/app/static/components/formDialog/DialogForm.js</url>
-          <line>16</line>
+          <line>17</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
