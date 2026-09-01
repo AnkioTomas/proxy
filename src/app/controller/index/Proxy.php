@@ -42,7 +42,7 @@ class Proxy extends BaseController
         ))
             ->setTimeout(30)
             ->setResponseInjector(function (string $body, array $headers, string $path) use ($debug): string {
-                return $this->injectProxyChrome($body, $debug);
+                return $this->injectProxyChrome($body, $headers, $debug);
             })
             ->setErrorHandler(function (\Throwable $e): void {
                 if (Context::instance()->isDebug()) {
@@ -85,9 +85,12 @@ class Proxy extends BaseController
             || str_starts_with($base, 'service-worker');
     }
 
-    private function injectProxyChrome(string $body, bool $debug): string
+    /**
+     * @param string[] $headerLines
+     */
+    private function injectProxyChrome(string $body, array $headerLines, bool $debug): string
     {
-        if ($body === '' || !$this->looksLikeHtml($body)) {
+        if ($body === '' || !$this->isHtmlResponse($headerLines) || !$this->looksLikeHtml($body)) {
             return $body;
         }
 
@@ -99,12 +102,33 @@ class Proxy extends BaseController
         return $this->insertBeforeCloseBody($body, $snippet);
     }
 
+    /**
+     * @param string[] $headerLines
+     */
+    private function isHtmlResponse(array $headerLines): bool
+    {
+        foreach ($headerLines as $line) {
+            if (stripos($line, 'Content-Type:') !== 0) {
+                continue;
+            }
+            $type = strtolower(trim(substr($line, strlen('Content-Type:'))));
+            $type = strtok($type, ';') ?: $type;
+
+            return str_contains($type, 'text/html');
+        }
+
+        return false;
+    }
+
     private function looksLikeHtml(string $body): bool
     {
-        $lower = strtolower($body);
-        return str_contains($lower, '<html')
-            || str_contains($lower, '<!doctype')
-            || str_contains($lower, '<body');
+        $head = strtolower(ltrim(substr($body, 0, 256)));
+        if (str_starts_with($head, '<!doctype html') || str_starts_with($head, '<html')) {
+            return true;
+        }
+
+        return (bool) preg_match('/<html[\s>]/i', $body)
+            && (bool) preg_match('/<\/body>/i', $body);
     }
 
     private function backButtonHtml(): string
@@ -163,11 +187,12 @@ HTML;
     private function insertBeforeCloseBody(string $body, string $snippet): string
     {
         if (preg_match('/<\/body>/i', $body)) {
-            return preg_replace('/<\/body>/i', $snippet . '</body>', $body, 1) ?? ($body . $snippet);
+            return preg_replace('/<\/body>/i', $snippet . '</body>', $body, 1) ?? $body;
         }
         if (preg_match('/<\/html>/i', $body)) {
-            return preg_replace('/<\/html>/i', $snippet . '</html>', $body, 1) ?? ($body . $snippet);
+            return preg_replace('/<\/html>/i', $snippet . '</html>', $body, 1) ?? $body;
         }
-        return $body . $snippet;
+
+        return $body;
     }
 }
