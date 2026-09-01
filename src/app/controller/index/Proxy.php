@@ -8,11 +8,21 @@ use app\service\GoTarget;
 use nova\framework\core\Context;
 use nova\framework\exception\ErrorHandler;
 use nova\framework\http\Response;
+use nova\framework\route\Controller;
 use nova\plugin\cookie\Cookie;
 use nova\plugin\proxy\ProxyResponse;
 
 class Proxy extends BaseController
 {
+    public function init(): ?Response
+    {
+        if (self::isStaticResource($this->request->getPath())) {
+            return Controller::init();
+        }
+
+        return parent::init();
+    }
+
     public function indexPath(string $path = ''): Response
     {
         $requestPath = $this->request->getPath();
@@ -43,6 +53,36 @@ class Proxy extends BaseController
                     echo 'Proxy failed: ' . $e->getMessage();
                 }
             });
+    }
+
+    private static function isStaticResource(string $requestPath): bool
+    {
+        if (!preg_match('#^/go/(?:https?)/[^/]+(/.*)?$#i', $requestPath, $m)) {
+            return false;
+        }
+
+        $path = strtolower($m[1] ?? '/');
+        if ($path === '/' || $path === '') {
+            return false;
+        }
+
+        static $extensions = [
+            '.js', '.css', '.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg', '.ico',
+            '.woff', '.woff2', '.ttf', '.eot', '.otf', '.map', '.wasm', '.webmanifest',
+            '.mp4', '.webm', '.mp3', '.ogg', '.wav', '.pdf', '.zip', '.avif',
+        ];
+
+        foreach ($extensions as $ext) {
+            if (str_ends_with($path, $ext)) {
+                return true;
+            }
+        }
+
+        $base = basename($path);
+
+        return $base === 'manifest.json'
+            || $base === 'sw.js'
+            || str_starts_with($base, 'service-worker');
     }
 
     private function injectProxyChrome(string $body, bool $debug): string
