@@ -5,11 +5,10 @@
         flex-wrap: wrap;
         gap: 0.75rem;
         align-items: center;
-        width: 100%;
     }
 
     .go-bar mdui-text-field {
-        flex: 1 1 16rem;
+        flex: 1 1 20rem;
         min-width: 0;
     }
 
@@ -36,11 +35,11 @@
                     variant="outlined"
                     clearable
                     placeholder="https://example.com/path"
-                    helper="输入完整 http(s) URL，点击 Go 开始中转"
+                    helper="输入 http(s) URL，回车或点击 Go"
                 ></mdui-text-field>
                 <div class="go-actions">
                     <mdui-checkbox id="goDebug">调试</mdui-checkbox>
-                    <mdui-button id="btnGo" icon="arrow_forward">Go</mdui-button>
+                    <mdui-button id="btnGo" end-icon="arrow_forward">Go</mdui-button>
                 </div>
             </div>
         </div>
