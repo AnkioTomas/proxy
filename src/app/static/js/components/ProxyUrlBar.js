@@ -67,6 +67,11 @@ class ProxyUrlBar extends HTMLElement {
         this._go.addEventListener('click', () => this._submit());
         this._debug.addEventListener('click', () => {
             this.debug = !this.debug;
+            this.dispatchEvent(new CustomEvent('proxy-debug-change', {
+                bubbles: true,
+                composed: true,
+                detail: { debug: this.debug }
+            }));
         });
         this._input.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {

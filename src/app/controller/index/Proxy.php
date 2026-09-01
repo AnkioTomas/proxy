@@ -33,7 +33,7 @@ class Proxy extends BaseController
             return Response::asText('400 Bad Request: invalid /go/ URL', [], 400);
         }
 
-        $debug = (string)Cookie::getInstance()->get('proxy_debug', '') === '1';
+        $debug = $this->isProxyDebugEnabled();
 
         return (new ProxyResponse(
             $parsed['target'],
@@ -85,6 +85,16 @@ class Proxy extends BaseController
             || str_starts_with($base, 'service-worker');
     }
 
+    private function isProxyDebugEnabled(): bool
+    {
+        $raw = Cookie::getInstance()->get('proxy_debug', '');
+        if (!is_scalar($raw)) {
+            return false;
+        }
+
+        return trim((string)$raw) === '1';
+    }
+
     /**
      * @param string[] $headerLines
      */
@@ -93,6 +103,10 @@ class Proxy extends BaseController
         if ($body === '' || !$this->isHtmlResponse($headerLines) || !$this->looksLikeHtml($body)) {
             return $body;
         }
+
+        // 注入内容随 cookie 变化；禁止缓存旧 HTML（否则关 debug 仍看到 Eruda）
+        header('Cache-Control: private, no-store, no-cache, must-revalidate', true);
+        header('Pragma: no-cache', true);
 
         $snippet = $this->backButtonHtml();
         if ($debug) {

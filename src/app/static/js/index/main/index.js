@@ -153,6 +153,10 @@ window.pageOnLoad = function () {
         location.assign(target);
     }
 
+    function syncDebugCookie(debugOn) {
+        writeCookie('proxy_debug', debugOn ? '1' : '0');
+    }
+
     function openAddDialog() {
         if (!requireLogin()) {
             return;
@@ -193,6 +197,9 @@ window.pageOnLoad = function () {
 
     if (urlBar) {
         urlBar.debug = readCookie('proxy_debug') === '1';
+        urlBar.addEventListener('proxy-debug-change', function (e) {
+            syncDebugCookie(!!(e.detail && e.detail.debug));
+        });
         urlBar.addEventListener('proxy-go', function (e) {
             goToUrl(e.detail.url, e.detail.debug);
         });
