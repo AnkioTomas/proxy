@@ -30,6 +30,9 @@ class Application extends App
 
         Route::getInstance()
             ->get('/', route('index', 'main', 'home'))
+            ->get('/api/quicklink/list', route('index', 'quicklink', 'list'))
+            ->post('/api/quicklink/save', route('index', 'quicklink', 'save'))
+            ->post('/api/quicklink/remove', route('index', 'quicklink', 'remove'))
             ->get('/proxy/manage', $legacyRedirect)
             ->get('/proxy/account', $legacyRedirect)
             ->get('/proxy/sso', $legacyRedirect)
