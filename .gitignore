@@ -2,3 +2,5 @@
 composer.lock
 /src/runtime
 /src/config.php
+
+src/config/
